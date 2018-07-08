@@ -1,1 +1,3 @@
-# Birds & Snakes :bird:&:snake:
+# Birds & Snakes
+
+Prototype Role Playing Game
