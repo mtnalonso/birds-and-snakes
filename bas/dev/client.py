@@ -11,7 +11,6 @@ class DevClient(Thread):
         self.username = username
 
     def start(self):
-        print('Launching dev client...')
         if self.username is None:
             self.username = input('username: ')
         self.is_running = True

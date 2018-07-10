@@ -4,7 +4,7 @@ from bas.dev.server import DevServer, server_input_queue
 
 
 def run_game(args):
-    print('Birds & Snakes')
+    print('Birds & Snakes\n')
 
     if args.dev:
         server = DevServer()

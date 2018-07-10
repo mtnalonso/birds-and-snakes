@@ -1,6 +1,6 @@
-from http.server import HTTPServer, BaseHTTPRequestHandler
 from threading import Thread
 from queue import Queue
+from http.server import HTTPServer, BaseHTTPRequestHandler
 
 from bas.message import Message
 
@@ -25,10 +25,12 @@ class DevRequestHandler(BaseHTTPRequestHandler):
         if user is not None and message is not None:
             message = Message(message, user)
             server_input_queue.put(message)
-            print(server_input_queue)
 
         self.send_response(200)
         self.end_headers()
+        return
+    
+    def log_message(self, format, *args):
         return
 
 
@@ -41,7 +43,6 @@ class DevServer(Thread, HTTPServer):
         Thread.__init__(self)
 
     def start(self):
-        print('Launching dev server...')
         super().start()
 
     def run(self):
