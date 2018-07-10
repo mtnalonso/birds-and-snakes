@@ -1,6 +1,7 @@
 from threading import Thread
 from queue import Queue
 from http.server import HTTPServer, BaseHTTPRequestHandler
+import json
 
 from bas.message import Message
 
@@ -12,19 +13,11 @@ class DevRequestHandler(BaseHTTPRequestHandler):
     def do_POST(self):
         content_length = int(self.headers.get('Content-Length', 0))
         body = self.rfile.read(content_length)
-        data = {}
 
-        paired_values = body.decode('utf-8').split('&')
-        for pair in paired_values:
-            key, value = pair.split('=')
-            data[key] = value
+        data = json.loads(body)
 
-        user = data.get('user')
-        message = data.get('message')
-
-        if user is not None and message is not None:
-            message = Message(message, user)
-            server_input_queue.put(message)
+        message = Message(data.get('message'), data.get('user'))
+        server_input_queue.put(message)
 
         self.send_response(200)
         self.end_headers()

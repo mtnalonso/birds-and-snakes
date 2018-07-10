@@ -1,5 +1,6 @@
 from threading import Thread
 import requests
+import json
 
 
 class DevClient(Thread):
@@ -30,7 +31,7 @@ class DevClient(Thread):
             raise SystemExit
         url = 'http://{}:{}'.format(self.host, self.port)
         data = {'message': message, 'user': self.username}
-        requests.post(url, data=data)
+        requests.post(url, json=data)
 
 
 if __name__ == '__main__':
