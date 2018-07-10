@@ -1,5 +1,11 @@
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from threading import Thread
+from queue import Queue
+
+from bas.message import Message
+
+
+server_input_queue = Queue()
 
 
 class DevRequestHandler(BaseHTTPRequestHandler):
@@ -13,16 +19,23 @@ class DevRequestHandler(BaseHTTPRequestHandler):
             key, value = pair.split('=')
             data[key] = value
 
+        user = data.get('user')
+        message = data.get('message')
+
+        if user is not None and message is not None:
+            message = Message(message, user)
+            server_input_queue.put(message)
+            print(server_input_queue)
+
         self.send_response(200)
         self.end_headers()
         return
 
 
 class DevServer(Thread, HTTPServer):
-    def __init__(self, port, host='localhost', queue=None):
+    def __init__(self, host='localhost', port=9876):
         self.host = host
         self.port = port
-        self.queue = queue
         self.handler = DevRequestHandler
         HTTPServer.__init__(self, (self.host, self.port), self.handler)
         Thread.__init__(self)
@@ -36,7 +49,3 @@ class DevServer(Thread, HTTPServer):
 
     def stop(self):
         self.shutdown()
-
-
-if __name__ == '__main__':
-    DevServer(9876).start()

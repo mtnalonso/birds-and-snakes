@@ -17,7 +17,6 @@ class GameMaster(Thread):
     def __init__(self, queue, interface=None):
         Thread.__init__(self)
         self.queue = queue
-        self.interface = interface
         self.games = {}
         self.user_games = {}
 
@@ -53,10 +52,8 @@ class GameMaster(Thread):
         self.is_running = False
 
     def send_response(self, response):
-        if self.interface is not None:
-            self.interface.send_reply(response)
-        else:
-            self.info('Got message [{}]'.format(response))
+        print(response)
+        logger.info('Got message [{}]'.format(response))
 
     def create_game(self, message):
         username = message.user

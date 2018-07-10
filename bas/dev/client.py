@@ -3,7 +3,7 @@ import requests
 
 
 class DevClient(Thread):
-    def __init__(self, port, host='localhost', username=None):
+    def __init__(self, host='localhost', port=9876, username=None):
         Thread.__init__(self)
         self.is_running = False
         self.port = str(port)
@@ -35,4 +35,4 @@ class DevClient(Thread):
 
 
 if __name__ == '__main__':
-    DevClient(9876).start()
+    DevClient().start()
