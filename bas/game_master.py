@@ -40,11 +40,11 @@ class GameMaster(Thread):
         self.send_response(response)
 
     def handle_message_command(self, message):
-        if 'create game' in message.message:
+        if message.message == 'create game':
             return self.create_game(message)
-        if 'list games' in message.message:
+        if message.message == 'list games':
             return self.list_games()
-        if 'print game' in message.message:
+        if message.message == 'print game':
             return self.print_game(message)
         return message
 
