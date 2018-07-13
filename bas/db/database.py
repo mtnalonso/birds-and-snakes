@@ -17,5 +17,15 @@ class Database:
     def create_all(self):
         self.metadata.create_all(self.engine)
 
+    def first(self, model_class, **kwargs):
+        if kwargs:
+            return self.session.query(model_class).filter_by(**kwargs).all()
+        return self.session.query(model_class).first()
+
+    def all(self, model_class, **kwargs):
+        if kwargs:
+            return self.session.query(model_class).filter_by(**kwargs).all()
+        return self.session.query(model_class).all()
+
 
 db = Database('database_bas', model.metadata)
