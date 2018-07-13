@@ -19,13 +19,17 @@ class Database:
 
     def first(self, model_class, **kwargs):
         if kwargs:
-            return self.session.query(model_class).filter_by(**kwargs).all()
-        return self.session.query(model_class).first()
+            return self.session.query(model_class).filter_by(**kwargs).all() or None
+        return self.session.query(model_class).first() or None
 
     def all(self, model_class, **kwargs):
         if kwargs:
             return self.session.query(model_class).filter_by(**kwargs).all()
         return self.session.query(model_class).all()
+
+    def insert(self, entity):
+        self.session.add(entity)
+        self.session.flush()
 
 
 db = Database('database_bas', model.metadata)

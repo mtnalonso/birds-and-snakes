@@ -1,12 +1,22 @@
+from bas.db.database import db
+from bas.db.model import User
+import bas.manager as manager
+
 
 class Message:
-    def __init__(self, message, user=None):
+    def __init__(self, message, username=None):
         self.__message = message
-        self.__user = user
+        self.__username = username
+        self.__user = None
+        self.__get_existing_user_or_create_new()
 
     @property
     def message(self):
         return self.__message
+
+    @property
+    def username(self):
+        return self.__username
 
     @property
     def user(self):
@@ -17,5 +27,11 @@ class Message:
 
     @classmethod
     def from_string(cls, message):
-        user, message = message.split(':', 1)
-        return cls(message.lstrip(), user)
+        username, message = message.split(':', 1)
+        return cls(message.lstrip(), username)
+
+    def __get_existing_user_or_create_new(self):
+        user = db.first(User, username=self.username)
+        if user is None:
+            user = manager.create_user(self.username)
+        self.__user = user

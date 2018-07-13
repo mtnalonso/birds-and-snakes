@@ -4,16 +4,14 @@ from threading import Thread
 
 from bas.game import Game
 from bas.player import Player
+from bas.db.database import db
+import bas.db.model as model
 
 
 logger = logging.getLogger(__name__)
 
 
 class GameMaster(Thread):
-    """
-    games : [gamekey] = game_instance
-    user_games : [username] = gamekey
-    """
     def __init__(self, queue, interface=None):
         Thread.__init__(self)
         self.queue = queue
@@ -43,7 +41,7 @@ class GameMaster(Thread):
         if message.message == 'create game':
             return self.create_game(message)
         if message.message == 'list games':
-            return self.list_games()
+            return self.list_games(message)
         if message.message == 'print game':
             return self.print_game(message)
         return message
@@ -56,8 +54,8 @@ class GameMaster(Thread):
         logger.info('Got message [{}]'.format(response))
 
     def create_game(self, message):
-        username = message.user
-        character_name = message.user
+        username = message.username
+        character_name = message.username
         game_key = '{}-{}'.format(datetime.now(), username)
 
         game = Game(game_key)
@@ -74,7 +72,8 @@ class GameMaster(Thread):
 
     def list_games(self):
         str_games_list = '\n'
-        for game in self.games:
+        user = db.first(model.User, username=message.user)
+        for game in db.all(model.Game, user=user):
             str_games_list += '{}\n'.format(str(game))
         return str_games_list
 

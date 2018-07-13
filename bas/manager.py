@@ -1,4 +1,5 @@
 from bas.db.database import db
+from bas.db.model import User
 
 
 class Manager:
@@ -12,3 +13,8 @@ class Manager:
     def create_database(self):
         db.create_all()
 
+
+def create_user(username):
+    user = User(username)
+    db.insert(user)
+    return db.first(User, username=username)
