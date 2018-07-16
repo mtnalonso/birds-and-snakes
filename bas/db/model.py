@@ -11,7 +11,9 @@ Base = declarative_base()
 class Game(Base):
     __tablename__ = 'games'
     id = Column(Integer, primary_key=True)
+    key = Column(String)
     datetime = Column(DateTime)
+    last_message_data = Column(DateTime)
     users = relationship('User', secondary='game_users')
 
     def __init__(self):
