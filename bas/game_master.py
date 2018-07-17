@@ -1,10 +1,7 @@
 import logging
 from datetime import datetime
-from pprint import pprint
 from threading import Thread
 
-from bas.game import Game
-from bas.player import Player
 from bas.db.database import db
 import bas.db.model as model
 

@@ -46,6 +46,9 @@ class User(Base):
             self.id, self.username, self.twitter_username
         )
 
+    def get_active_games(self):
+        return [game for game in self.games if game.active]
+
 
 class GameUsers(Base):
     __tablename__ = 'game_users'
