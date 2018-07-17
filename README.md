@@ -27,7 +27,15 @@ The development mode uses a client - server architecture where each client emula
 
     $ python3 bas/dev/client.py
 
-##### Commands
+###### Commands
+
+    > create game
+
+    > list games
+
+    > add people: @bird @snake #c3d7288a94b34b1090c5739eec2b8154
+
+###### Manager
 
 Create new sqlite database
 
