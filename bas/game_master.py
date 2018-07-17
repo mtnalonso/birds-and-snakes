@@ -68,10 +68,9 @@ class GameMaster(Thread):
         self.active_games[game.key] = game
         return '\n[+] Created new game\n{}'.format(game)
 
-    def list_games(self):
-        str_games_list = '\n'
-        user = db.first(model.User, username=message.user)
-        for game in db.all(model.Game, user=user):
+    def list_games(self, message):
+        str_games_list = 'List of games for {}:\n'.format(message.user)
+        for game in message.user.games:
             str_games_list += '{}\n'.format(str(game))
         return str_games_list
 
