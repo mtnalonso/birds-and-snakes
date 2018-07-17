@@ -18,7 +18,7 @@ def get_user_or_create_if_new(username):
     user = db.first(User, username=username)
     if user is None:
         user = create_user(username)
-        print('Created new user:\n{}\n'.format(user))
+        print('\n[+] Created new user:\n{}\n'.format(user))
     return user
 
 
