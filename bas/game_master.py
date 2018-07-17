@@ -4,6 +4,7 @@ from threading import Thread
 
 from bas.db.database import db
 import bas.db.model as model
+import bas.manager as manager
 
 
 logger = logging.getLogger(__name__)
@@ -46,8 +47,8 @@ class GameMaster(Thread):
             return self.list_games(message)
         if message.message == 'print game':
             return self.print_game(message)
-        if message.message == 'add people':
-            return self.add_people(message)
+        if 'add people:' in message.message:
+            return self.add_people_to_game(message)
         return message
 
     def stop(self):
@@ -78,9 +79,25 @@ class GameMaster(Thread):
         raise NotImplementedError
 
     def add_people_to_game(self, message):
-        """
-        Add other people to your active game separated by commas
-        If there is no active game, notice to create one
-        Game key on message
-        """
-        raise NotImplementedError
+        # TODO: add try except and rollback
+        content_message = message.message.split(':')[-1]
+        input_elements = content_message.split()
+        new_usernames = []
+        response = 'Users:\n'
+
+        for element in input_elements:
+            if element[0] == '#':
+                game_key = element[1:]
+            if element[0] == '@':
+                new_usernames.append(element[1:])
+
+        game = db.first(model.Game, key=game_key)
+
+        for username in new_usernames:
+            user = manager.get_user_or_create_if_new(username)
+            game.users.append(user)
+            response += '{}\n'.format(user)
+
+        db.update()
+        response += 'were added to game:\n{}\n'.format(game)
+        return response

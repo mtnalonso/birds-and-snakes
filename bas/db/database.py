@@ -34,5 +34,8 @@ class Database:
         self.session.add(entity)
         self.session.commit()
 
+    def update(self):
+        self.session.commit()
+
 
 db = Database('database_bas', model.metadata)
