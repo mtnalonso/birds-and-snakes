@@ -1,7 +1,8 @@
 from datetime import datetime
 from uuid import uuid4
 
-from sqlalchemy import Table, Column, Integer, String, DateTime, ForeignKey, Sequence
+from sqlalchemy import Table, Column, Integer, String, DateTime, ForeignKey, \
+        Sequence, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 
@@ -14,15 +15,19 @@ class Game(Base):
     id = Column(Integer, Sequence('game_id_seq'), primary_key=True)
     key = Column(String(50))
     creation_datetime = Column(DateTime)
+    active = Column(Boolean)
     last_message_datetime = Column(DateTime)
     users = relationship('User', secondary='game_users')
 
-    def __init__(self):
+    def __init__(self, active=True):
         self.creation_datetime = datetime.now()
         self.key = uuid4().hex
+        self.active = active
 
     def __repr__(self):
-        return '<Game(id={}, key={})>'.format(self.id, self.key)
+        return '<Game(id={}, key={}, active={})>'.format(
+            self.id, self.key, self.active
+        )
 
 
 class User(Base):
@@ -38,7 +43,7 @@ class User(Base):
 
     def __repr__(self):
         return '<User(id={}, username={}, twitter_username={})>'.format(
-                self.id, self.username, self.twitter_username
+            self.id, self.username, self.twitter_username
         )
 
 
