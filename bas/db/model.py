@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import Table, Column, Integer, String, DateTime, ForeignKey
+from sqlalchemy import Table, Column, Integer, String, DateTime, ForeignKey, Sequence
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 
@@ -10,8 +10,8 @@ Base = declarative_base()
 
 class Game(Base):
     __tablename__ = 'games'
-    id = Column(Integer, primary_key=True)
-    key = Column(String)
+    id = Column(Integer, Sequence('game_id_seq'), primary_key=True)
+    key = Column(String(50))
     datetime = Column(DateTime)
     last_message_data = Column(DateTime)
     users = relationship('User', secondary='game_users')
@@ -25,9 +25,9 @@ class Game(Base):
 
 class User(Base):
     __tablename__ = 'users'
-    id = Column(Integer, primary_key=True)
-    username = Column(String)
-    twitter_username = Column(String)
+    id = Column(Integer, Sequence('user_id_seq'), primary_key=True)
+    username = Column(String(100))
+    twitter_username = Column(String(50))
     games = relationship('Game', secondary='game_users')
     
     def __init__(self, username, twitter_username=None):
