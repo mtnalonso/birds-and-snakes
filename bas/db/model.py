@@ -1,4 +1,5 @@
 from datetime import datetime
+from uuid import uuid4
 
 from sqlalchemy import Table, Column, Integer, String, DateTime, ForeignKey, Sequence
 from sqlalchemy.ext.declarative import declarative_base
@@ -12,15 +13,16 @@ class Game(Base):
     __tablename__ = 'games'
     id = Column(Integer, Sequence('game_id_seq'), primary_key=True)
     key = Column(String(50))
-    datetime = Column(DateTime)
-    last_message_data = Column(DateTime)
+    creation_datetime = Column(DateTime)
+    last_message_datetime = Column(DateTime)
     users = relationship('User', secondary='game_users')
 
     def __init__(self):
-        self.datetime = datetime.now()
+        self.creation_datetime = datetime.now()
+        self.key = uuid4().hex()
 
     def __repr__(self):
-        return '<Game(id={})>'.format(self.id)
+        return '<Game(id={}, key={})>'.format(self.id, self.key)
 
 
 class User(Base):
