@@ -1,5 +1,6 @@
 import logging
 from datetime import datetime
+from pprint import pprint
 from threading import Thread
 
 from bas.game import Game
@@ -15,10 +16,10 @@ class GameMaster(Thread):
     def __init__(self, queue, interface=None):
         Thread.__init__(self)
         self.queue = queue
-        self.games = {}
-        self.user_games = {}
+        self.active_games = None
 
     def start(self):
+        self.load_active_games()
         self.is_running = True
         super().start()
 
@@ -32,6 +33,10 @@ class GameMaster(Thread):
             self.process_message()
         return
 
+    def load_active_games(self):
+        self.active_games = {}
+        print('[-] Warning: not loading active games from DB\n')
+
     def process_message(self):
         message = self.queue.get()
         response_message = self.handle_message_command(message)
@@ -44,6 +49,8 @@ class GameMaster(Thread):
             return self.list_games(message)
         if message.message == 'print game':
             return self.print_game(message)
+        if message.message == 'add people':
+            return self.add_people(message)
         return message
 
     def stop(self):
@@ -54,21 +61,12 @@ class GameMaster(Thread):
         logger.info('Got message [{}]'.format(message))
 
     def create_game(self, message):
-        username = message.username
-        character_name = message.username
-        game_key = '{}-{}'.format(datetime.now(), username)
-
-        game = Game(game_key)
-        player = Player(username, character_name)
-        game.add_player(player)
-
-        self.games[game_key] = game
-        if username in self.user_games:
-            self.user_games[username].append(game_key)
-        else:
-            self.user_games[username] = []
-            self.user_games[username].append(game_key)
-        return 'GAME CREATED: {}'.format(game.key)
+        user = message.user
+        game = model.Game()
+        game.users.append(user)
+        db.insert(game)
+        self.active_games[game.key] = game
+        return '\n[+] Created new game\n{}'.format(game)
 
     def list_games(self):
         str_games_list = '\n'
@@ -78,6 +76,15 @@ class GameMaster(Thread):
         return str_games_list
 
     def print_game(self, message):
-        game_key = self.user_games[message.user][0]
-        game = self.games[game_key]
-        return game.print_levels()
+        """
+        Print information of the current active game for the user
+        """
+        raise NotImplementedError
+
+    def add_people_to_game(self, message):
+        """
+        Add other people to your active game separated by commas
+        If there is no active game, notice to create one
+        Game key on message
+        """
+        raise NotImplementedError
