@@ -1,5 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.pool import StaticPool
 
 import bas.db.model as model
 
@@ -8,7 +9,9 @@ class Database:
     def __init__(self, database_name, metadata):
         self.database_name = database_name
         self.metadata = metadata
-        self.engine = create_engine('sqlite:///{}.sqlite'.format(database_name))
+        self.engine = create_engine('sqlite:///{}.sqlite'.format(database_name),
+                connect_args={'check_same_thread':False},
+                poolclass=StaticPool)
         Session = sessionmaker()
         Session.configure(bind=self.engine)
         self.session = Session()
@@ -29,7 +32,7 @@ class Database:
 
     def insert(self, entity):
         self.session.add(entity)
-        self.session.flush()
+        self.session.commit()
 
 
 db = Database('database_bas', model.metadata)
