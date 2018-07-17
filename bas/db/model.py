@@ -19,7 +19,7 @@ class Game(Base):
 
     def __init__(self):
         self.creation_datetime = datetime.now()
-        self.key = uuid4().hex()
+        self.key = uuid4().hex
 
     def __repr__(self):
         return '<Game(id={}, key={})>'.format(self.id, self.key)
