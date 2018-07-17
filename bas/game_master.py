@@ -34,8 +34,8 @@ class GameMaster(Thread):
 
     def process_message(self):
         message = self.queue.get()
-        response = self.handle_message_command(message)
-        self.send_response(response)
+        response_message = self.handle_message_command(message)
+        self.send_response(response_message)
 
     def handle_message_command(self, message):
         if message.message == 'create game':
@@ -49,9 +49,9 @@ class GameMaster(Thread):
     def stop(self):
         self.is_running = False
 
-    def send_response(self, response):
-        print(response)
-        logger.info('Got message [{}]'.format(response))
+    def send_response(self, message):
+        print(message)
+        logger.info('Got message [{}]'.format(message))
 
     def create_game(self, message):
         username = message.username

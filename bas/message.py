@@ -7,8 +7,7 @@ class Message:
     def __init__(self, message, username=None):
         self.__message = message
         self.__username = username
-        self.__user = None
-        self.__get_existing_user_or_create_new()
+        self.__user = manager.get_user_or_create_if_new(self.username)
 
     @property
     def message(self):
@@ -23,15 +22,9 @@ class Message:
         return self.__user
 
     def __str__(self):
-        return '{}: {}'.format(self.user, self.message)
+        return '{}: {}'.format(self.username, self.message)
 
     @classmethod
     def from_string(cls, message):
         username, message = message.split(':', 1)
         return cls(message.lstrip(), username)
-
-    def __get_existing_user_or_create_new(self):
-        user = db.first(User, username=self.username)
-        if user is None:
-            user = manager.create_user(self.username)
-        self.__user = user
