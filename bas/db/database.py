@@ -19,8 +19,8 @@ class Database:
 
     def first(self, model_class, **kwargs):
         if kwargs:
-            return self.session.query(model_class).filter_by(**kwargs).all() or None
-        return self.session.query(model_class).first() or None
+            return self.session.query(model_class).filter_by(**kwargs).one_or_none()
+        return self.session.query(model_class).one_or_none()
 
     def all(self, model_class, **kwargs):
         if kwargs:
