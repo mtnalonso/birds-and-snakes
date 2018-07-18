@@ -3,7 +3,7 @@ from datetime import datetime
 from threading import Thread
 
 from bas.db.database import db
-import bas.db.model as model
+from bas.db.model.game import Game
 import bas.manager as manager
 
 
@@ -60,7 +60,7 @@ class GameMaster(Thread):
 
     def create_game(self, message):
         user = message.user
-        game = model.Game()
+        game = Game()
         game.users.append(user)
         db.insert(game)
         self.active_games[game.key] = game
@@ -91,7 +91,7 @@ class GameMaster(Thread):
             if element[0] == '@':
                 new_usernames.append(element[1:])
 
-        game = db.first(model.Game, key=game_key)
+        game = db.first(Game, key=game_key)
 
         for username in new_usernames:
             user = manager.get_user_or_create_if_new(username)

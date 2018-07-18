@@ -1,5 +1,5 @@
 from bas.db.database import db
-from bas.db.model import User
+from bas.db.model.user import User
 import bas.manager as manager
 
 

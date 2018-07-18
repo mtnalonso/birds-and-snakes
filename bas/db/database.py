@@ -1,24 +1,23 @@
 from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
 
-import bas.db.model as model
-
 
 class Database:
-    def __init__(self, database_name, metadata):
+    def __init__(self, database_name):
         self.database_name = database_name
-        self.metadata = metadata
         self.engine = create_engine('sqlite:///{}.sqlite'.format(database_name),
                 connect_args={'check_same_thread':False},
                 poolclass=StaticPool)
-        Session = sessionmaker()
-        Session.configure(bind=self.engine)
+        Session = sessionmaker(bind=self.engine)
         self.session = Session()
-        self.metadata.bind = self.engine
+        self.Base = declarative_base()
 
     def create_all(self):
-        self.metadata.create_all(self.engine)
+        metadata = self.Base.metadata
+        metadata.bind = self.engine
+        metadata.create_all(self.engine)
 
     def first(self, model_class, **kwargs):
         if kwargs:
@@ -38,4 +37,4 @@ class Database:
         self.session.commit()
 
 
-db = Database('database_bas', model.metadata)
+db = Database('database_bas')
