@@ -1,4 +1,3 @@
-
 from sqlalchemy import Table, Column, Integer, String, Sequence
 from sqlalchemy.orm import relationship
 
