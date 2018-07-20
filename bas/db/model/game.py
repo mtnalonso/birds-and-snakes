@@ -5,10 +5,10 @@ from sqlalchemy import Table, Column, Integer, String, DateTime, Sequence, \
         Boolean
 from sqlalchemy.orm import relationship
 
-from bas.db.database import db
+from bas.db.database import Base
 
 
-class Game(db.Base):
+class Game(Base):
     __tablename__ = 'games'
     id = Column(Integer, Sequence('game_id_seq'), primary_key=True)
     key = Column(String(50))

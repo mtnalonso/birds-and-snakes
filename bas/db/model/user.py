@@ -1,10 +1,10 @@
 from sqlalchemy import Table, Column, Integer, String, Sequence
 from sqlalchemy.orm import relationship
 
-from bas.db.database import db
+from bas.db.database import Base
 
 
-class User(db.Base):
+class User(Base):
     __tablename__ = 'users'
     id = Column(Integer, Sequence('user_id_seq'), primary_key=True)
     username = Column(String(100))

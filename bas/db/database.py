@@ -4,6 +4,9 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
 
 
+Base = declarative_base()
+
+
 class Database:
     def __init__(self, database_name):
         self.database_name = database_name
@@ -12,7 +15,7 @@ class Database:
                 poolclass=StaticPool)
         Session = sessionmaker(bind=self.engine)
         self.session = Session()
-        self.Base = declarative_base()
+        self.Base = Base
 
     def create_all(self):
         metadata = self.Base.metadata

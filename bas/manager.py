@@ -1,3 +1,4 @@
+import bas.db.model
 from bas.db.database import db
 from bas.db.model.user import User
 
