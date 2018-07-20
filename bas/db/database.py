@@ -18,9 +18,10 @@ Base = declarative_base(metadata=meta)
 class Database:
     def __init__(self, database_name):
         self.database_name = database_name
-        self.engine = create_engine('sqlite:///{}.sqlite'.format(database_name),
-                connect_args={'check_same_thread':False},
-                poolclass=StaticPool)
+        self.engine = create_engine(
+            'sqlite:///{}.sqlite'.format(database_name),
+            connect_args={'check_same_thread': False},
+            poolclass=StaticPool)
         Session = sessionmaker(bind=self.engine)
         self.session = Session()
         self.Base = Base
@@ -32,7 +33,8 @@ class Database:
 
     def first(self, model_class, **kwargs):
         if kwargs:
-            return self.session.query(model_class).filter_by(**kwargs).one_or_none()
+            results = self.session.query(model_class).filter_by(**kwargs)
+            return results.one_or_none()
         return self.session.query(model_class).one_or_none()
 
     def all(self, model_class, **kwargs):

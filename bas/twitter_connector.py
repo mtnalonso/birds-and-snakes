@@ -1,7 +1,8 @@
 import logging
 import tweepy
 
-from config import CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET
+from config import CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, \
+        ACCESS_TOKEN_SECRET
 
 logger = logging.getLogger(__name__)
 
@@ -36,6 +37,7 @@ class TwitterConnector:
     def stop_listener(self):
         self.listener.stop()
         self.active = False
+
 
 class TwitterListener(tweepy.StreamListener):
     def __init__(self, inbox_queue):

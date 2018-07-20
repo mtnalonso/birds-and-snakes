@@ -9,28 +9,29 @@ class Character(Base):
     __tablename__ = 'characters'
     id = Column(Integer, Sequence('character_id_seq'), primary_key=True)
     name = Column(String(500))
+    level = Column(Integer)
+    experience = Column(BigInteger)
+
     gender_id = Column(Integer, ForeignKey('genders.id'))
     gender = relationship('Gender')
     pronoun_id = Column(Integer, ForeignKey('pronouns.id'))
     pronoun = relationship('Pronoun')
-    level = Column(Integer)
-    experience = Column(BigInteger)
 
-    def __init__(self, name, gender=None, pronoun=None, level=1):
+    def __init__(self, name, level=1, gender=None, pronoun=None):
         self.name = name
-        self.gender = gender
-        self.pronoun = pronoun
         self.level = level
         self.experience = 0
+        self.gender = gender
+        self.pronoun = pronoun
 
     def __repr__(self):
-        return '''<Character(id={}, name={}, gender={}, pronoun={}, level={},
-               experience={})>
+        return '''<Character(id={}, name={}, level={}, experience={},
+               gender={}, pronoun={})>
                '''.format(
             self.id,
             self.name,
-            self.gender,
-            self.pronoun,
             self.level,
             self.experience,
+            self.gender,
+            self.pronoun,
         )

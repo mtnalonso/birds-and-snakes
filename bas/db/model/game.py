@@ -14,6 +14,7 @@ class Game(Base):
     creation_datetime = Column(DateTime)
     active = Column(Boolean)
     last_message_datetime = Column(DateTime)
+
     users = relationship('User', secondary='game_users')
 
     def __init__(self, active=True):

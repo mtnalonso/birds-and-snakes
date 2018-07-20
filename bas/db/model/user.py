@@ -9,8 +9,9 @@ class User(Base):
     id = Column(Integer, Sequence('user_id_seq'), primary_key=True)
     username = Column(String(100))
     twitter_username = Column(String(50))
+
     games = relationship('Game', secondary='game_users')
-    
+
     def __init__(self, username, twitter_username=None):
         self.username = username
         self.twitter_username = twitter_username
