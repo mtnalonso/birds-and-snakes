@@ -11,11 +11,16 @@ class Character(Base):
     name = Column(String(500))
     level = Column(Integer)
     experience = Column(BigInteger)
+    health_points = Column(Integer)
+    speed = Column(Integer)
+    strength = Column(Integer)
+    intelligence = Column(Integer)
 
     gender_id = Column(Integer, ForeignKey('genders.id'))
     gender = relationship('Gender')
     pronoun_id = Column(Integer, ForeignKey('pronouns.id'))
     pronoun = relationship('Pronoun')
+    user_id = Column(Integer, ForeignKey('users.id'))
 
     def __init__(self, name, level=1, gender=None, pronoun=None):
         self.name = name
@@ -25,13 +30,18 @@ class Character(Base):
         self.pronoun = pronoun
 
     def __repr__(self):
-        return '''<Character(id={}, name={}, level={}, experience={},
+        return '''<Character(id={}, name={}, level={}, experience={}, 
+               health_points={}, speed={}, strength={}, intelligence={},
                gender={}, pronoun={})>
                '''.format(
             self.id,
             self.name,
             self.level,
             self.experience,
+            self.health_points,
+            self.speed,
+            self.strength,
+            self.intelligence,
             self.gender,
             self.pronoun,
         )

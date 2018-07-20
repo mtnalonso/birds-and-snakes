@@ -11,6 +11,7 @@ class User(Base):
     twitter_username = Column(String(50))
 
     games = relationship('Game', secondary='game_users')
+    characters = relationship('Character')
 
     def __init__(self, username, twitter_username=None):
         self.username = username
