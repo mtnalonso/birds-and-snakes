@@ -62,7 +62,8 @@ def run_migrations_online():
     with connectable.connect() as connection:
         context.configure(
             connection=connection,
-            target_metadata=target_metadata
+            target_metadata=target_metadata,
+            render_as_batch=config.get_main_option('sqlalchemy.url').startswith('sqlite:///')
         )
 
         with context.begin_transaction():
