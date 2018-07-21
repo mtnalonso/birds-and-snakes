@@ -40,3 +40,6 @@ The development mode uses a client - server architecture where each client emula
 Create new sqlite database
 
     $ python3 birds_and_snakes.py -m create_database
+
+## WIKI
+For more information please take a look at our [wiki](https://github.com/mtnalonso/birds-and-snakes/wiki)
