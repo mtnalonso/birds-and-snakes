@@ -1,8 +1,10 @@
+import sys
 import argparse
 import logging
 import logging.handlers
 from logging.config import dictConfig
 
+import bas.config as config
 from bas.main import run_game
 from bas.manager import Manager
 
@@ -49,9 +51,16 @@ def load_args():
     return parser.parse_args()
 
 
-if __name__ == '__main__':
+def handle_args():
     args = load_args()
     if args.manager:
         Manager().command(args.manager)
-    else:
-        run_game(args)
+        sys.exit()
+    if args.dev:
+        config.ENVIRONMENT = config.ENV_DEV
+    return
+
+
+if __name__ == '__main__':
+    handle_args()
+    run_game()

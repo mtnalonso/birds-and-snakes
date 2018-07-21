@@ -1,14 +1,14 @@
 from queue import Queue
 
-from bas.config import config, ENV_DEV
+import bas.config as config
 from bas.game_master import GameMaster
 from bas.dev.server import DevServer, server_input_queue
 
 
-def run_game(args):
+def run_game():
     print('Birds & Snakes\n')
 
-    if args.dev:
+    if config.is_dev_mode():
         server = DevServer()
         input_queue = server_input_queue
 
@@ -16,7 +16,6 @@ def run_game(args):
 
     try:
         if config.is_dev_mode():
-            print('DEV MODE')
             server.start()
         game_master.start()
     except SystemExit:
