@@ -1,4 +1,6 @@
 from queue import Queue
+
+from bas.config import config, ENV_DEV
 from bas.game_master import GameMaster
 from bas.dev.server import DevServer, server_input_queue
 
@@ -13,12 +15,13 @@ def run_game(args):
     game_master = GameMaster(input_queue)
 
     try:
-        if args.dev:
+        if config.is_dev_mode():
+            print('DEV MODE')
             server.start()
         game_master.start()
     except SystemExit:
         game_master.stop()
-        if args.dev:
+        if config.is_dev_mode():
             server.stop()
     finally:
         game_master.join()
