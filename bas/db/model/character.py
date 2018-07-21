@@ -33,7 +33,7 @@ class Character(Base):
         self.pronoun = pronoun
 
     def __repr__(self):
-        return '''<Character(id={}, name={}, level={}, experience={}, 
+        return '''<Character(id={}, name={}, level={}, experience={},
                health_points={}, speed={}, strength={}, intelligence={},
                gender={}, pronoun={}, character_class={})>
                '''.format(

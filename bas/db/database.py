@@ -3,6 +3,8 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
 
+import bas.config as config
+
 
 meta = MetaData(naming_convention={
     "ix": "ix_%(column_0_label)s",
@@ -16,15 +18,32 @@ Base = declarative_base(metadata=meta)
 
 
 class Database:
-    def __init__(self, database_name):
-        self.database_name = database_name
-        self.engine = create_engine(
-            'sqlite:///{}.sqlite'.format(database_name),
-            connect_args={'check_same_thread': False},
-            poolclass=StaticPool)
+    def __init__(self):
+        self.database_name = config.database_name
+        self.database_engine = config.database_engine
+        self.database_credentials = self.__get_database_credentials()
+        self.__init_engine()
         Session = sessionmaker(bind=self.engine)
         self.session = Session()
         self.Base = Base
+
+    def __get_database_credentials(self):
+        if not config.is_dev_mode():
+            return '{}:{}@{}:{}'.format(
+                config.database.user,
+                config.database_password,
+                config.database_host,
+                config.database_port
+            )
+        return ''
+
+    def __init_engine(self):
+        self.engine = create_engine(
+            '{}://{}/{}'.format(self.database_engine,
+                                self.database_credentials,
+                                self.database_name),
+            connect_args={'check_same_thread': False},
+            poolclass=StaticPool)
 
     def create_all(self):
         metadata = self.Base.metadata
@@ -50,4 +69,4 @@ class Database:
         self.session.commit()
 
 
-db = Database('database_bas')
+db = Database()

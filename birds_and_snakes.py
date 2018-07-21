@@ -4,7 +4,6 @@ import logging
 import logging.handlers
 from logging.config import dictConfig
 
-import bas.config as config
 from bas.main import run_game
 from bas.manager import Manager
 
@@ -44,8 +43,6 @@ def activate_file_logging(formatter):
 def load_args():
     parser = argparse.ArgumentParser(prog='birds_and_snakes.py',
                                      epilog='Enjoy the game!')
-    parser.add_argument('-d', '--dev', action='store_true',
-                        help='Use development interface')
     parser.add_argument('-m', '--manager', metavar='COMMAND',
                         help='Manager interface')
     return parser.parse_args()
@@ -53,11 +50,10 @@ def load_args():
 
 def handle_args():
     args = load_args()
+
     if args.manager:
         Manager().command(args.manager)
         sys.exit()
-    if args.dev:
-        config.ENVIRONMENT = config.ENV_DEV
     return
 
 
