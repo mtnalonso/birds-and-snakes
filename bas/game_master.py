@@ -5,8 +5,9 @@ from threading import Thread
 
 from bas.db.database import db
 from bas.db.model.game import Game
+import bas.config as config
 import bas.manager as manager
-from bas.nlp.dialogflow import DialogflowV1
+from bas.nlp.nlp import NLPFactory
 
 
 logger = logging.getLogger(__name__)
@@ -17,7 +18,7 @@ class GameMaster(Thread):
         Thread.__init__(self)
         self.queue = queue
         self.active_games = None
-        self.nlp_service = DialogflowV1()
+        self.nlp_service = NLPFactory.create(config.nlp_session_id)
 
     def start(self):
         self.load_active_games()
