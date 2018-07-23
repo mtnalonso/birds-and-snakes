@@ -3,6 +3,7 @@ from pprint import pprint
 from bas.nlp.intents.add_game_people import AddGamePeople
 from bas.nlp.intents.create_game import CreateGame
 from bas.nlp.intents.list_games import ListGames
+import bas.nlp.keywords as keywords
 from bas.nlp.nlp import NLPFactory
 import bas.config as config
 
@@ -13,21 +14,44 @@ class MessageHandler:
         self.nlp_service = NLPFactory.create(config.nlp_session_id)
 
     def process(self, message):
-        nlp_data = self.nlp_service.get_message_data(message.message)
+        preprocessed_message = self.__get_preprocessed_message(message)
+        nlp_data = self.nlp_service.get_message_data(preprocessed_message)
         intent = self.__get_intent(nlp_data)
         response = intent.execute(message, nlp_data)
         return response
 
+    def __get_preprocessed_message(self, message):
+        preprocessed_message = message.message
+        if '@' in preprocessed_message:
+            preprocessed_message = self.__replace_usernames(message)
+        if '#' in preprocessed_message:
+            preprocessed_message = self.__replace_game_key(message)
+        return preprocessed_message
+
+    def __replace_usernames(self, message):
+        # TODO: replace twitter usernames with player keyword
+        # keywords.PLAYER
+        return message
+
+    def __replace_game_key(self, message):
+        # TODO: replace game key with game key keyword
+        # keywords.GAME
+        return message
+
     def __get_intent(self, nlp_data):
         intent_tag = self.__get_intent_tag(nlp_data)
-        print(intent_tag)
+        intent = None
+
         if intent_tag == 'create-game':
             intent = CreateGame
         if intent_tag == 'list-user-games':
             intent = ListGames
+
+        if intent is not None:
+            return intent(self.game_master)
         else:
+            print('INTENT NOT RECOGNIZED')
             raise NotImplementedError
-        return intent(self.game_master)
 
     def __get_intent_tag(self, nlp_data):
         result = nlp_data['result']

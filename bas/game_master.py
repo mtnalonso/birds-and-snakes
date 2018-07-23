@@ -1,6 +1,5 @@
 import logging
 from datetime import datetime
-from pprint import pprint
 from threading import Thread
 
 from bas.db.database import db
@@ -26,7 +25,6 @@ class GameMaster(Thread):
 
     def load_active_games(self):
         self.active_games = manager.get_active_games()
-        pprint(self.active_games)
 
     def run(self):
         while self.is_running:
@@ -43,12 +41,12 @@ class GameMaster(Thread):
 
     def process_message(self):
         message = self.queue.get()
-        self.print_message(message.message)
+        self.print_message(message)
         response_message = self.message_handler.process(message)
-        print(response_message)
+        print(response_message + '\n')
 
     def print_message(self, message):
-        print(message)
+        print('\n{}\n'.format(message))
         logger.info('Got message [{}]'.format(message))
 
     def add_people_to_game(self, message):

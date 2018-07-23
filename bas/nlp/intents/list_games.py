@@ -6,7 +6,7 @@ class ListGames(Intent):
         super().__init__('list-games', game_master)
 
     def execute(self, message, nlp_data):
-        str_games_list = 'List of games for {}:\n'.format(message.user)
+        str_games_list = 'List of games for {}:'.format(message.user)
         for game in message.user.games:
-            str_games_list += '{}\n'.format(str(game))
+            str_games_list += '\n\t{}'.format(str(game))
         return str_games_list
