@@ -35,7 +35,7 @@ class MessageHandler:
 
     def __replace_game_key(self, message):
         # TODO: replace game key with game key keyword
-        # keywords.GAME
+        # keywords.GAME_KEY
         return message
 
     def __get_intent(self, nlp_data):
