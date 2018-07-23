@@ -1,6 +1,9 @@
+from pprint import pprint
+
 import bas.db.model
 from bas.db.database import db
 from bas.db.model.user import User
+from bas.db.model.game import Game
 
 
 class Manager:
@@ -27,3 +30,10 @@ def create_user(username):
     user = User(username)
     db.insert(user)
     return db.first(User, username=username)
+
+
+def get_active_games():
+    active_games = {}
+    for game in db.all(Game, active=True):
+        active_games[game.key] = game
+    return active_games

@@ -36,8 +36,8 @@ class GameMaster(Thread):
         return
 
     def load_active_games(self):
-        self.active_games = {}
-        print('[-] Warning: not loading active games from DB\n')
+        self.active_games = manager.get_active_games()
+        pprint(self.active_games)
 
     def process_message(self):
         message = self.queue.get()
