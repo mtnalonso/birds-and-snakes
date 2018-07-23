@@ -10,12 +10,19 @@ config = ConfigParser()
 config.read(CONFIG_FILE)
 
 environment = config['DEFAULT']['environment']
+language = config['DEFAULT']['language']
+
+nlp_service = config['DEFAULT']['nlp_service']
+
 database_engine = config[environment]['database_engine']
 database_name = config[environment].get('database_name')
 database_user = config[environment].get('database_user')
 database_password = config[environment].get('database_password')
 database_host = config[environment].get('database_host')
 database_port = config[environment].get('database_port')
+
+nlp_service_key = config[nlp_service].get('api_key')
+nlp_session_id = config[nlp_service].get('session')
 
 twitter_key = config['twitter']['consumer_key']
 twitter_secret = config['twitter']['consumer_secret']

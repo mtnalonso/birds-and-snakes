@@ -1,10 +1,12 @@
 import logging
 from datetime import datetime
+from pprint import pprint
 from threading import Thread
 
 from bas.db.database import db
 from bas.db.model.game import Game
 import bas.manager as manager
+from bas.nlp.dialogflow import DialogflowV1
 
 
 logger = logging.getLogger(__name__)
@@ -15,6 +17,7 @@ class GameMaster(Thread):
         Thread.__init__(self)
         self.queue = queue
         self.active_games = None
+        self.nlp_service = DialogflowV1()
 
     def start(self):
         self.load_active_games()
@@ -38,6 +41,7 @@ class GameMaster(Thread):
     def process_message(self):
         message = self.queue.get()
         response_message = self.handle_message_command(message)
+        self.show_nlp_message_information(message)
         self.send_response(response_message)
 
     def handle_message_command(self, message):
@@ -50,6 +54,11 @@ class GameMaster(Thread):
         if 'add people:' in message.message:
             return self.add_people_to_game(message)
         return message
+
+    def show_nlp_message_information(self, message):
+        nlp_data = self.nlp_service.get_message_data(message.message)
+        pprint(nlp_data)
+        return
 
     def stop(self):
         self.is_running = False
