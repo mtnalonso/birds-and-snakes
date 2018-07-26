@@ -29,9 +29,10 @@ class MessageHandler:
         return preprocessed_message
 
     def __replace_usernames(self, message):
-        # TODO: replace twitter usernames with player keyword
-        # keywords.PLAYER
-        return message
+        split_message = message.split(' ')
+        parsed_split_message = [x if x[0] != '@'
+                                else keywords.PLAYER for x in split_message]
+        return ' '.join(parsed_split_message)
 
     def __replace_game_key(self, message):
         # TODO: replace game key with game key keyword
@@ -50,7 +51,7 @@ class MessageHandler:
         if intent is not None:
             return intent(self.game_master)
         else:
-            print('INTENT NOT RECOGNIZED')
+            logger.error('Intent not recognized', nlp_data)
             raise NotImplementedError
 
     def __get_intent_tag(self, nlp_data):
