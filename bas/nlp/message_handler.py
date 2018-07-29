@@ -51,7 +51,8 @@ class MessageHandler:
         if intent is not None:
             return intent(self.game_master)
         else:
-            logger.error('Intent not recognized', nlp_data)
+            #logger.error('Intent not recognized', nlp_data)
+            print('\t[-] Intent not recognized')
             raise NotImplementedError
 
     def __get_intent_tag(self, nlp_data):
