@@ -4,6 +4,7 @@ import bas.db.model
 from bas.db.database import db
 from bas.db.model.user import User
 from bas.db.model.game import Game
+from bas.db.scripts.base_database import populate_all
 
 
 class Manager:
@@ -16,6 +17,7 @@ class Manager:
 
     def create_database(self):
         db.create_all()
+        populate_all()
 
 
 def get_user_or_create_if_new(username):

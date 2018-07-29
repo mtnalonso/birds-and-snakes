@@ -12,7 +12,7 @@ class Game(Base):
     id = Column(Integer, Sequence('game_id_seq'), primary_key=True)
     key = Column(String(50))
     creation_datetime = Column(DateTime)
-    active = Column(Boolean)
+    active = Column(Boolean(name='active_bool'))
     last_message_datetime = Column(DateTime)
 
     users = relationship('User', secondary='game_users')
