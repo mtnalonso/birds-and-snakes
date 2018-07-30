@@ -26,8 +26,8 @@ class Character(Base):
     user_id = Column(Integer, ForeignKey('users.id'))
     character_class_id = Column(Integer, ForeignKey('character_classes.id'))
 
-    def __init__(self, name, user=None, race=None, character_class=None, level=1,
-                gender=None, pronoun=None):
+    def __init__(self, name, user=None, race=None, character_class=None,
+                 level=1, gender=None, pronoun=None):
         self.name = name
         self.user = user
         self.race = race

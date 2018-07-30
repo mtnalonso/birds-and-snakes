@@ -11,11 +11,13 @@ class CreateCharacter(Intent):
 
     def execute(self, message, nlp_data):
         user = message.user
-        
+
         if self.is_action_complete(nlp_data):
             character = self.create_character(user, nlp_data)
-            return '[+] Created character "{}" ({})'.format(character.name,
-                    character.character_class)
+            return '[+] Created character "{}" ({})'.format(
+                    character.name,
+                    character.character_class
+            )
         else:
             # TODO: add context to master
             return self.get_fulfillment(nlp_data)
