@@ -11,3 +11,6 @@ Prototype Role Playing Game
 
 ## :books: WIKI
 For more information please take a look at our [wiki](https://github.com/mtnalonso/birds-and-snakes/wiki)
+
+## :page_with_curl: License
+This game is OGL compatible ([OGL License](https://github.com/mtnalonso/birds-and-snakes/blob/master/LICENSE_OGL.md))
