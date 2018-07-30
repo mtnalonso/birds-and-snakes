@@ -21,7 +21,7 @@ class Manager:
 
 
 def get_user_or_create_if_new(username):
-    user = db.first(User, username=username)
+    user = db.find(User, username=username)
     if user is None:
         user = create_user(username)
         print('\n[+] Created new user:\n{}\n'.format(user))
@@ -31,7 +31,7 @@ def get_user_or_create_if_new(username):
 def create_user(username):
     user = User(username)
     db.insert(user)
-    return db.first(User, username=username)
+    return db.find(User, username=username)
 
 
 def get_active_games():

@@ -42,10 +42,10 @@ class CreateCharacter(Intent):
 
     def get_race(self, parameters):
         race_name = parameters['race']
-        race = db.first(Race, name=race_name)
+        race = db.find(Race, name=race_name)
         return race
 
     def get_character_class(self, parameters):
         character_class_name = parameters['character-class']
-        character_class = db.first(CharacterClass, name=character_class_name)
+        character_class = db.find(CharacterClass, name=character_class_name)
         return character_class

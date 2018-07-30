@@ -54,3 +54,11 @@ class Character(Base):
             self.pronoun_id,
             self.character_class_id,
         )
+    
+    def __str__(self):
+        return '{} [{}: {}, user={}]'.format(
+            self.name,
+            self.character_class,
+            self.level,
+            self.user
+        )

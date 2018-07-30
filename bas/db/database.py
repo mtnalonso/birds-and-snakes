@@ -50,7 +50,7 @@ class Database:
         metadata.bind = self.engine
         metadata.create_all(self.engine)
 
-    def first(self, model_class, **kwargs):
+    def find(self, model_class, **kwargs):
         if kwargs:
             results = self.session.query(model_class).filter_by(**kwargs)
             return results.one_or_none()

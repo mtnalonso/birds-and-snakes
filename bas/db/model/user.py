@@ -27,5 +27,8 @@ class User(Base):
             self.id, self.username, self.twitter_username, self.level
         )
 
+    def __str__(self):
+        return self.username
+
     def get_active_games(self):
         return [game for game in self.games if game.active]

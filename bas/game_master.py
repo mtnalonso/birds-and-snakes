@@ -62,7 +62,7 @@ class GameMaster(Thread):
             if element[0] == '@':
                 new_usernames.append(element[1:])
 
-        game = db.first(Game, key=game_key)
+        game = db.find(Game, key=game_key)
 
         for username in new_usernames:
             user = manager.get_user_or_create_if_new(username)
