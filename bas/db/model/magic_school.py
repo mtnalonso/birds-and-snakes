@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, Sequence, String
+from sqlalchemy.orm import relationship
 
 from bas.db.database import Base
 
@@ -7,6 +8,8 @@ class MagicSchool(Base):
     __tablename__ = 'magic_schools'
     id = Column(Integer, Sequence('magic_school_id_seq'), primary_key=True)
     name = Column(String(500))
+
+    spells = relationship('Spell')
 
     def __init__(self, name):
         self.name = name
