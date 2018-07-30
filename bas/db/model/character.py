@@ -11,10 +11,14 @@ class Character(Base):
     name = Column(String(500))
     level = Column(Integer)
     experience = Column(BigInteger)
+
     health_points = Column(Integer)
     speed = Column(Integer)
     strength = Column(Integer)
-    intelligence = Column(Integer)
+    dexterity = Column(Integer)
+    constitution = Column(Integer)
+    wisdom = Column(Integer)
+    charisma = Column(Integer)
 
     gender = relationship('Gender')
     pronoun = relationship('Pronoun')
@@ -39,8 +43,8 @@ class Character(Base):
 
     def __repr__(self):
         return '''<Character(id={}, name={}, level={}, experience={},
-               health_points={}, speed={}, strength={}, intelligence={},
-               gender={}, pronoun={}, character_class={})>
+               health_points={}, speed={}, strength={}, gender={}, pronoun={},
+               character_class={})>
                '''.format(
             self.id,
             self.name,
@@ -49,7 +53,6 @@ class Character(Base):
             self.health_points,
             self.speed,
             self.strength,
-            self.intelligence,
             self.gender_id,
             self.pronoun_id,
             self.character_class_id,
