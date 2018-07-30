@@ -1,5 +1,6 @@
 from bas.db.database import db
 from bas.db.model.character_class import CharacterClass
+from bas.db.model.magic_school import MagicSchool
 from bas.db.model.race import Race
 import bas.config as config
 
@@ -44,6 +45,28 @@ def populate_character_classes():
     print('[+] All character classes added to the database.')
 
 
+def populate_schools_of_magic():
+    school_names_en = [
+        'Abjuration', 'Conjuration', 'Divination', 'Enchantment',
+        'Evocation', 'Illusion', 'Necromancy', 'Transmutation'
+    ]
+
+    school_names_es = [
+        'Abjuración', 'Conjuración', 'Adivinación', 'Encantamiento',
+        'Evocación', 'Ilusión', 'Nigromancia', 'Transmutación'
+    ]
+
+    school_names = {'en': school_names_en, 'es': school_names_es}
+
+    for school_name in school_names[config.language]:
+        school = MagicSchool(school_name)
+        db.session.add(school)
+    db.session.commit()
+    print('[+] All schools of magic added to the database')
+
+
 def populate_all():
     populate_races()
     populate_character_classes()
+    populate_schools_of_magic()
+
