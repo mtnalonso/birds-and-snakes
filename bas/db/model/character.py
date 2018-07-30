@@ -18,6 +18,7 @@ class Character(Base):
 
     gender = relationship('Gender')
     pronoun = relationship('Pronoun')
+    user = relationship('User')
     character_class = relationship('CharacterClass')
 
     gender_id = Column(Integer, ForeignKey('genders.id'))
@@ -25,8 +26,12 @@ class Character(Base):
     user_id = Column(Integer, ForeignKey('users.id'))
     character_class_id = Column(Integer, ForeignKey('character_classes.id'))
 
-    def __init__(self, name, level=1, gender=None, pronoun=None):
+    def __init__(self, name, user=None, race=None, character_class=None, level=1,
+                gender=None, pronoun=None):
         self.name = name
+        self.user = user
+        self.race = race
+        self.character_class = character_class
         self.level = level
         self.experience = 0
         self.gender = gender

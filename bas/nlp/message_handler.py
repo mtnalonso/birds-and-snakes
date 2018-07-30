@@ -1,6 +1,7 @@
 from pprint import pprint
 
 from bas.nlp.intents.add_game_people import AddGamePeople
+from bas.nlp.intents.create_character import CreateCharacter
 from bas.nlp.intents.create_game import CreateGame
 from bas.nlp.intents.list_games import ListGames
 import bas.nlp.keywords as keywords
@@ -47,6 +48,8 @@ class MessageHandler:
             intent = CreateGame
         if intent_tag == 'list-user-games':
             intent = ListGames
+        if intent_tag == 'create-character':
+            intent = CreateCharacter
 
         if intent is not None:
             return intent(self.game_master)
