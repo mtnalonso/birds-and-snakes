@@ -14,6 +14,11 @@ class Manager:
     def command(self, command):
         if command == 'create_database':
             self.create_database()
+            return
+        if command == 'populate_database':
+            populate_all()
+            return
+        print('[-] Wrong command!')
 
     def create_database(self):
         db.create_all()
