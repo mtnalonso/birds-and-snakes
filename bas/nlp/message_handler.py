@@ -1,5 +1,3 @@
-from pprint import pprint
-
 from bas.nlp.intents.add_game_people import AddGamePeople
 from bas.nlp.intents.create_character import CreateCharacter
 from bas.nlp.intents.create_game import CreateGame
@@ -25,8 +23,6 @@ class MessageHandler:
         preprocessed_message = message.message
         if '@' in preprocessed_message:
             preprocessed_message = self.__replace_usernames(message)
-        if '#' in preprocessed_message:
-            preprocessed_message = self.__replace_game_key(message)
         return preprocessed_message
 
     def __replace_usernames(self, message):
@@ -34,11 +30,6 @@ class MessageHandler:
         parsed_split_message = [x if x[0] != '@'
                                 else keywords.PLAYER for x in split_message]
         return ' '.join(parsed_split_message)
-
-    def __replace_game_key(self, message):
-        # TODO: replace game key with game key keyword
-        # keywords.GAME_KEY
-        return message
 
     def __get_intent(self, nlp_data):
         intent_tag = self.__get_intent_tag(nlp_data)
@@ -54,9 +45,7 @@ class MessageHandler:
         if intent is not None:
             return intent(self.game_master)
         else:
-            # logger.error('Intent not recognized', nlp_data)
             print('\t[-] Intent not recognized')
-            raise NotImplementedError
 
     def __get_intent_tag(self, nlp_data):
         result = nlp_data['result']

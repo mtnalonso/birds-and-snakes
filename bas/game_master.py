@@ -1,30 +1,21 @@
-import logging
 from datetime import datetime
 from threading import Thread
 
 from bas.db.database import db
-from bas.db.model.game import Game
 import bas.manager as manager
 from bas.nlp.message_handler import MessageHandler
-
-
-logger = logging.getLogger(__name__)
 
 
 class GameMaster(Thread):
     def __init__(self, queue, interface=None):
         Thread.__init__(self)
         self.queue = queue
-        self.active_games = None
         self.message_handler = MessageHandler(self)
+        self.game = None
 
     def start(self):
-        self.load_active_games()
         self.is_running = True
         super().start()
-
-    def load_active_games(self):
-        self.active_games = manager.get_active_games()
 
     def run(self):
         while self.is_running:
@@ -41,34 +32,28 @@ class GameMaster(Thread):
 
     def process_message(self):
         message = self.queue.get()
-        self.print_message(message)
-        response_message = self.message_handler.process(message)
+        print('\n{}\n'.format(message))
+        if 'add_people' in message.message:
+            response_message = self.add_people_to_game(message)
+        else:
+            response_message = self.message_handler.process(message)
         print(response_message + '\n')
 
-    def print_message(self, message):
-        print('\n{}\n'.format(message))
-        logger.info('Got message [{}]'.format(message))
-
     def add_people_to_game(self, message):
-        # TODO: add try except and rollback
         content_message = message.message.split(':')[-1]
         input_elements = content_message.split()
         new_usernames = []
         response = 'Users:\n'
 
         for element in input_elements:
-            if element[0] == '#':
-                game_key = element[1:]
             if element[0] == '@':
                 new_usernames.append(element[1:])
 
-        game = db.find(Game, key=game_key)
-
         for username in new_usernames:
             user = manager.get_user_or_create_if_new(username)
-            game.users.append(user)
+            self.game.users.append(user)
             response += '{}\n'.format(user)
 
         db.update()
-        response += 'were added to game:\n{}\n'.format(game)
+        response += 'were added to game:\n{}\n'.format(self.game)
         return response

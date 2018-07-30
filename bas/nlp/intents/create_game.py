@@ -12,5 +12,5 @@ class CreateGame(Intent):
         game = Game()
         game.users.append(user)
         db.insert(game)
-        self.game_master.active_games[game.key] = game
+        self.game_master.game = game
         return '[+] Created new game\n{}'.format(game)
