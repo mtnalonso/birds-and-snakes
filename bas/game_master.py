@@ -1,5 +1,7 @@
 from datetime import datetime
 from threading import Thread
+from queue import Queue
+from uuid import uuid4
 
 from bas.db.database import db
 import bas.manager as manager
@@ -7,11 +9,14 @@ from bas.nlp.message_handler import MessageHandler
 
 
 class GameMaster(Thread):
-    def __init__(self, queue, interface=None):
+    def __init__(self, system_master):
         Thread.__init__(self)
-        self.queue = queue
+        self.thread_id = uuid4().hex
+        self.system_master = system_master
+        self.queue = Queue()
         self.message_handler = MessageHandler(self)
         self.game = None
+        print('[+] Started Game Master #{}'.format(self.thread_id))
 
     def start(self):
         self.is_running = True
@@ -29,6 +34,9 @@ class GameMaster(Thread):
 
     def stop(self):
         self.is_running = False
+
+    def new_message(self, message):
+        self.queue.put(message)
 
     def process_message(self):
         message = self.queue.get()
