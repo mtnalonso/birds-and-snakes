@@ -15,9 +15,16 @@ class MessageHandler:
     def process(self, message):
         preprocessed_message = self.__get_preprocessed_message(message)
         nlp_data = self.nlp_service.get_message_data(preprocessed_message)
-        intent = self.__get_intent(nlp_data)
-        response = intent.execute(message, nlp_data)
-        return response
+        return self.__process_intent_and_get_response(nlp_data)
+
+    def __process_intent_and_get_response(self, nlp_data):
+        try:
+            intent = self.__get_intent(nlp_data)
+            response = intent.execute(message, nlp_data)
+        except Exception as e:
+            response = str(e)
+        finally:
+            return response
 
     def __get_preprocessed_message(self, message):
         preprocessed_message = message.message
