@@ -1,6 +1,7 @@
 from bas.db.database import db
 from bas.db.model.user import User
 import bas.manager as manager
+import bas.nlp.keywords as keywords
 
 
 class Message:
@@ -28,3 +29,15 @@ class Message:
     def from_string(cls, message):
         username, message = message.split(':', 1)
         return cls(message.lstrip(), username)
+
+    def get_preprocessed_message(self):
+        preprocessed_message = self.message
+        if '@' in preprocessed_message:
+            preprocessed_message = self.__replace_usernames(self.message)
+        return preprocessed_message
+
+    def __replace_usernames(self):
+        split_message = self.message.split(' ')
+        parsed_split_message = [x if x[0] != '@'
+                                else keywords.PLAYER for x in split_message]
+        return ' '.join(parsed_split_message)
