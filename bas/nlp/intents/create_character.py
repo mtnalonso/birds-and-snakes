@@ -19,7 +19,6 @@ class CreateCharacter(Intent):
                     character.character_class
             )
         else:
-            # TODO: add context to master
             return self.get_fulfillment(nlp_data)
 
     def create_character(self, user, nlp_data):

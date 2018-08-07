@@ -69,4 +69,3 @@ def populate_all():
     populate_races()
     populate_character_classes()
     populate_schools_of_magic()
-
