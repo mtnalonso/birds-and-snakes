@@ -52,7 +52,7 @@ class MessageHandler:
         if intent is not None:
             return intent(self.game_master)
         else:
-            print('\t[-] Intent not recognized')
+            raise Exception('Intent not recognized')
 
     def __get_intent_tag(self, nlp_data):
         result = nlp_data['result']
