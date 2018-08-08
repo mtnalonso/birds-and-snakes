@@ -16,6 +16,9 @@ class GameMaster(Thread):
         self.queue = Queue()
         self.message_handler = MessageHandler(self)
         self.game = None
+        self.game_ready = False
+        self.awaiting_more_characters = False
+        self.awaiting_start_confirmation = False
         print('[+] Started Game Master #{}'.format(self.thread_id))
 
     def start(self):
@@ -41,11 +44,21 @@ class GameMaster(Thread):
     def process_message(self):
         message = self.queue.get()
         print('\n{}\n'.format(message))
-        if 'add_people' in message.message:
-            response_message = self.add_people_to_game(message)
+
+        if self.awaiting_more_characters:
+            self.add_people_to_game(message)
+        elif self.awaiting_start_confirmation:
+            response_message = self.start_game_if_ready(message)
         else:
             response_message = self.message_handler.process(message)
-        print(response_message + '\n')
+
+        if self.awaiting_more_characters:
+            print('- Who else wants to join the game? (tag user / nobody)\n')
+        elif self.awaiting_start_confirmation:
+            print('- Are you ready to start the adventure? (yes / no)\n')
+        else:
+            print(response_message + '\n')
+        return
 
     def add_people_to_game(self, message):
         content_message = message.message.split(':')[-1]
@@ -64,4 +77,15 @@ class GameMaster(Thread):
 
         db.update()
         response += 'were added to game:\n{}\n'.format(self.game)
-        return response
+
+        # TODO: check if every player has a character
+
+        self.awaiting_more_characters = False
+        self.awaiting_start_confirmation = True
+        print(response)
+
+    def start_game_if_ready(self, message):
+        if message.message == 'yes':
+            self.awaiting_start_confirmation = False
+            return '[+] GAME HAS STARTED'
+        return '- How can I help you?'

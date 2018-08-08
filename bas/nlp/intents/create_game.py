@@ -13,4 +13,5 @@ class CreateGame(Intent):
         game.users.append(user)
         db.insert(game)
         self.game_master.game = game
+        self.game_master.awaiting_more_characters = True
         return '[+] Created new game\n{}'.format(game)
