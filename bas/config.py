@@ -22,7 +22,6 @@ database_host = config[environment].get('database_host')
 database_port = config[environment].get('database_port')
 
 nlp_service_key = config[nlp_service].get('api_key')
-nlp_session_id = config[nlp_service].get('session')
 
 twitter_key = config['twitter']['consumer_key']
 twitter_secret = config['twitter']['consumer_secret']

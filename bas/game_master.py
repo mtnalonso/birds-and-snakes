@@ -11,7 +11,7 @@ from bas.nlp.message_handler import MessageHandler
 class GameMaster(Thread):
     def __init__(self, system_master):
         Thread.__init__(self)
-        self.thread_id = uuid4().hex
+        self.__id = uuid4().hex
         self.system_master = system_master
         self.queue = Queue()
         self.message_handler = MessageHandler(self)
@@ -19,7 +19,11 @@ class GameMaster(Thread):
         self.game_ready = False
         self.awaiting_more_characters = False
         self.awaiting_start_confirmation = False
-        print('[+] Started Game Master #{}'.format(self.thread_id))
+        print('[+] Started Game Master #{}'.format(self.__id))
+
+    @property
+    def id(self): 
+        return self.__id
 
     def start(self):
         self.is_running = True

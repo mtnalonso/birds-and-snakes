@@ -3,13 +3,12 @@ from bas.nlp.intents.create_character import CreateCharacter
 from bas.nlp.intents.create_game import CreateGame
 from bas.nlp.intents.list_games import ListGames
 from bas.nlp.nlp import NLPFactory
-import bas.config as config
 
 
 class MessageHandler:
     def __init__(self, game_master):
         self.game_master = game_master
-        self.nlp_service = NLPFactory.create(config.nlp_session_id)
+        self.nlp_service = NLPFactory.create(self.game_master.id)
 
     def process(self, message):
         nlp_data = self.nlp_service.get_message_data(message)

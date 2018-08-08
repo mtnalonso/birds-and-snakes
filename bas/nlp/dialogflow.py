@@ -21,5 +21,6 @@ class DialogflowV1(NLP):
         request = self.api.text_request()
         request.query = message.get_preprocessed_message()
         request.lang = self.language
-        request.session_id = 'bird' + str(message.user.id)
+        request.session_id = '{}.{}'.format(self.session_id,
+                                            message.user.id)
         return request
