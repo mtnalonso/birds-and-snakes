@@ -7,5 +7,6 @@ __pycache__/
 config.ini
 doc/
 nlp_models/
+reset_db.sh
 
 .DS_Store
