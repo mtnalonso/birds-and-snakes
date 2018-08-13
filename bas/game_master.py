@@ -50,19 +50,20 @@ class GameMaster(Thread):
         print('\n{}\n'.format(message))
 
         if self.awaiting_more_characters:
-            self.add_people_to_game(message)
+            response_message = self.add_people_to_game(message)
         elif self.awaiting_start_confirmation:
             response_message = self.start_game_if_ready(message)
         else:
             response_message = self.message_handler.process(message)
 
         if self.awaiting_more_characters:
-            print('- Who else wants to join the game? (tag user / nobody)\n')
+            response_message += '\n- Who else wants to join the game?'
+            response_message += '\n(tag user / nobody)\n'
         elif self.awaiting_start_confirmation:
-            print('- Are you ready to start the adventure? (yes / no)\n')
+            response_message += '\n- Say "yes" when ready to begin.\n'
         else:
-            print(response_message + '\n')
-        return
+            response_message += '\n'
+        print(response_message)
 
     def add_people_to_game(self, message):
         content_message = message.message.split(':')[-1]
@@ -82,18 +83,27 @@ class GameMaster(Thread):
         db.update()
         response += 'were added to game:\n{}\n'.format(self.game)
 
-        # TODO: check if every player has a character
-
         for user in self.game.users:
             if user.default_character is None:
-                print('{} needs to create a character')
+                response += '{} needs to create a character'.format(
+                    user.username
+                )
 
         self.awaiting_more_characters = False
         self.awaiting_start_confirmation = True
-        print(response)
+        return response
 
     def start_game_if_ready(self, message):
         if message.message == 'yes':
-            self.awaiting_start_confirmation = False
-            return '[+] GAME HAS STARTED'
+            if self.has_every_user_a_character():
+                self.awaiting_start_confirmation = False
+                return '[+] GAME HAS STARTED'
+            else:
+                return '[-] Every user must have a character created!'
         return '- How can I help you?'
+
+    def has_every_user_a_character(self):
+        for user in self.game.users:
+            if user.default_character is None:
+                return False
+        return True
