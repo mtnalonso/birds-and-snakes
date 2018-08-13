@@ -14,21 +14,26 @@ class User(Base):
     max_character_level = Column(Integer)
     total_experience = Column(BigInteger)
 
-    games = relationship('Game', secondary='game_users')
-    characters = relationship('Character')
-    default_character = relationship('Character')
-
+    character_id = Column(Integer, ForeignKey('characters.id'))
     default_character_id = Column(Integer, ForeignKey('characters.id'))
+
+    games = relationship('Game', secondary='game_users')
+    characters = relationship('Character', foreign_keys=[character_id])
+    default_character = relationship('Character',
+                                     foreign_keys=default_character_id)
 
     def __init__(self, username, twitter_username=None):
         self.username = username
         self.twitter_username = twitter_username
+        self.default_character = None
 
     def __repr__(self):
         return '''
-                <User(id={}, username={}, twitter_username={}, level={})>
+                <User(id={}, username={}, twitter_username={}, level={},
+                default_character={})>
                 '''.format(
-            self.id, self.username, self.twitter_username, self.level
+            self.id, self.username, self.twitter_username, self.level,
+            self.default_character
         )
 
     def __str__(self):

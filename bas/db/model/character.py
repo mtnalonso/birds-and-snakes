@@ -20,15 +20,15 @@ class Character(Base):
     wisdom = Column(Integer)
     charisma = Column(Integer)
 
-    gender = relationship('Gender')
-    pronoun = relationship('Pronoun')
-    user = relationship('User')
-    character_class = relationship('CharacterClass')
-
     gender_id = Column(Integer, ForeignKey('genders.id'))
     pronoun_id = Column(Integer, ForeignKey('pronouns.id'))
     user_id = Column(Integer, ForeignKey('users.id'))
     character_class_id = Column(Integer, ForeignKey('character_classes.id'))
+
+    gender = relationship('Gender')
+    pronoun = relationship('Pronoun')
+    user = relationship('User', foreign_keys=user_id)
+    character_class = relationship('CharacterClass')
 
     def __init__(self, name, user=None, race=None, character_class=None,
                  level=1, gender=None, pronoun=None):
