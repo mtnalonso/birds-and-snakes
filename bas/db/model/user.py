@@ -1,4 +1,5 @@
-from sqlalchemy import Table, Column, Integer, String, Sequence, BigInteger
+from sqlalchemy import Table, Column, Integer, String, Sequence, BigInteger, \
+        ForeignKey
 from sqlalchemy.orm import relationship
 
 from bas.db.database import Base
@@ -15,6 +16,9 @@ class User(Base):
 
     games = relationship('Game', secondary='game_users')
     characters = relationship('Character')
+    default_character = relationship('Character')
+
+    default_character_id = Column(Integer, ForeignKey('characters.id'))
 
     def __init__(self, username, twitter_username=None):
         self.username = username
