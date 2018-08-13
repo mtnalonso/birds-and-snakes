@@ -27,7 +27,8 @@ class Character(Base):
 
     gender = relationship('Gender')
     pronoun = relationship('Pronoun')
-    user = relationship('User', foreign_keys=user_id)
+    user = relationship('User', foreign_keys=user_id,
+                        back_populates='characters')
     character_class = relationship('CharacterClass')
 
     def __init__(self, name, user=None, race=None, character_class=None,
