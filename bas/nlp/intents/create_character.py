@@ -32,6 +32,11 @@ class CreateCharacter(Intent):
         character.character_class = character_class
 
         user.characters.append(character)
+        if user.default_character is None:
+            user.default_character = character
+            print('[+] Set {} as default character for {}'.format(
+                character.name, user
+            ))
         db.insert(character)
         return character
 

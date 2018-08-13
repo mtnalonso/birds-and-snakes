@@ -84,6 +84,10 @@ class GameMaster(Thread):
 
         # TODO: check if every player has a character
 
+        for user in self.game.users:
+            if user.default_character is None:
+                print('{} needs to create a character')
+
         self.awaiting_more_characters = False
         self.awaiting_start_confirmation = True
         print(response)
