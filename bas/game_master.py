@@ -22,7 +22,7 @@ class GameMaster(Thread):
         print('[+] Started Game Master #{}'.format(self.__id))
 
     @property
-    def id(self): 
+    def id(self):
         return self.__id
 
     def start(self):
