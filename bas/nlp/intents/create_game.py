@@ -25,7 +25,6 @@ class CreateGame(Intent):
         game.state = game_state.awaiting_characters()
         db.insert(game)
         self.game_master.game = game
-        self.game_master.awaiting_more_characters = True
         self.game = game
 
         response = '[+] Created new game\n{}\n'.format(game)

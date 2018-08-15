@@ -76,9 +76,12 @@ class GameMaster(Thread):
 
         for user in self.game.users:
             if user.default_character is None:
-                response += '{} needs to create a character'.format(
+                response += '{} needs to create a character\n'.format(
                     user.username
                 )
 
-        self.game.state = game_state.awaiting_start_confirmation()
+        if self.game.players_have_characters_set():
+            self.game.state = game_state.awaiting_start_confirmation()
+        else:
+            self.game.state = game_state.awaiting_characters()
         return response
