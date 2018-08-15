@@ -3,6 +3,11 @@ from sqlalchemy import Column, Integer, String, Sequence
 from bas.db.database import Base
 
 
+INIT = 'Initialized game class'
+AWAITING_CHARACTERS = 'Awaiting more characters'
+AWAITING_START_CONFIRMATION = 'Awaiting start confirmation'
+
+
 class GameState(Base):
     __tablename__ = 'game_states'
     id = Column(Integer, Sequence('game_state_id_seq'), primary_key=True)

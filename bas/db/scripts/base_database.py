@@ -1,7 +1,10 @@
 from bas.db.database import db
 from bas.db.model.character_class import CharacterClass
+from bas.db.model.game_state import GameState
+from bas.db.model.game_state import GameState
 from bas.db.model.magic_school import MagicSchool
 from bas.db.model.race import Race
+import bas.db.model.game_state as game_state
 import bas.config as config
 
 
@@ -65,7 +68,21 @@ def populate_schools_of_magic():
     print('[+] All schools of magic added to the database')
 
 
+def populate_game_states():
+    game_states = []
+
+    game_states.append(GameState(game_state.INIT))
+    game_states.append(GameState(game_state.AWAITING_CHARACTERS))
+    game_states.append(GameState(game_state.AWAITING_START_CONFIRMATION))
+
+    for game_state_entity in game_states:
+        db.session.add(game_state_entity)
+    db.session.commit()
+    print('[+] All game states added to the database')
+
+
 def populate_all():
     populate_races()
     populate_character_classes()
     populate_schools_of_magic()
+    populate_game_states()
