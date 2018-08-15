@@ -95,15 +95,9 @@ class GameMaster(Thread):
 
     def start_game_if_ready(self, message):
         if message.message == 'yes':
-            if self.has_every_user_a_character():
+            if self.game.players_have_characters_set():
                 self.awaiting_start_confirmation = False
                 return '[+] GAME HAS STARTED'
             else:
                 return '[-] Every user must have a character created!'
         return '- How can I help you?'
-
-    def has_every_user_a_character(self):
-        for user in self.game.users:
-            if user.default_character is None:
-                return False
-        return True

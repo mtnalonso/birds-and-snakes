@@ -30,3 +30,9 @@ class Game(Base):
         return '<Game(id={}, key={}, active={}, state={})>'.format(
             self.id, self.key, self.active, self.state
         )
+
+    def players_have_characters_set(self):
+        for user in self.users:
+            if user.default_character is None:
+                return False
+        return True

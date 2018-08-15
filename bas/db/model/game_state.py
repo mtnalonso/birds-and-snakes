@@ -21,3 +21,11 @@ class GameState(Base):
 
     def __str__(self):
         return self.name
+
+
+def awaiting_characters():
+    return db.find(GameState, name=AWAITING_CHARACTERS)
+
+
+def awaiting_start_confirmation():
+    return db.find(GameState, name=AWAITING_START_CONFIRMATION)
