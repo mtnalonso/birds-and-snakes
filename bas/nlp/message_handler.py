@@ -16,13 +16,16 @@ class MessageHandler:
         return response
 
     def __process_intent_and_get_response(self, message, nlp_data):
-        try:
-            intent = self.__get_intent(nlp_data)
-            response = intent.execute(message, nlp_data)
-        except Exception as e:
-            response = str(e)
-        finally:
-            return response
+        # TODO: alter this checking DEV mode
+        #try:
+        #    intent = self.__get_intent(nlp_data)
+        #    response = intent.execute(message, nlp_data)
+        #except Exception as e:
+        #    response = str(e)
+        #finally:
+        #    return response
+        intent = self.__get_intent(nlp_data)
+        return intent.execute(message, nlp_data)
 
     def __get_intent(self, nlp_data):
         intent_tag = self.__get_intent_tag(nlp_data)
@@ -35,10 +38,7 @@ class MessageHandler:
         if intent_tag == 'create-character':
             intent = CreateCharacter
 
-        if intent is not None:
-            return intent(self.game_master)
-        else:
-            raise Exception('Intent not recognized')
+        return intent(self.game_master)
 
     def __get_intent_tag(self, nlp_data):
         result = nlp_data['result']

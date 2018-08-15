@@ -11,14 +11,14 @@ class CreateGame(Intent):
 
     def execute(self, message, nlp_data):
         if self.game is None:
-            response = self.create_new_game()
+            response = self.create_new_game(message)
         elif self.game.state == game_state.awaiting_characters():
             response = self.start_game_if_ready()
         elif self.game.state == game_state.awaiting_start_confirmation():
             response = self.start_game()
         return response
 
-    def create_new_game(self):
+    def create_new_game(self, message):
         user = message.user
         game = Game()
         game.users.append(user)

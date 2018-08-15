@@ -74,6 +74,7 @@ def populate_game_states():
     game_states.append(GameState(game_state.INIT))
     game_states.append(GameState(game_state.AWAITING_CHARACTERS))
     game_states.append(GameState(game_state.AWAITING_START_CONFIRMATION))
+    game_states.append(GameState(game_state.STARTED))
 
     for game_state_entity in game_states:
         db.session.add(game_state_entity)

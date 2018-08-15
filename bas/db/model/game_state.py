@@ -1,11 +1,13 @@
 from sqlalchemy import Column, Integer, String, Sequence
 
 from bas.db.database import Base
+from bas.db.database import db
 
 
 INIT = 'Initialized game class'
 AWAITING_CHARACTERS = 'Awaiting more characters'
 AWAITING_START_CONFIRMATION = 'Awaiting start confirmation'
+STARTED = 'Game started'
 
 
 class GameState(Base):
@@ -29,3 +31,6 @@ def awaiting_characters():
 
 def awaiting_start_confirmation():
     return db.find(GameState, name=AWAITING_START_CONFIRMATION)
+
+def started():
+    return db.find(GameState, name=STARTED)

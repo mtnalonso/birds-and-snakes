@@ -4,6 +4,7 @@ from queue import Queue
 from uuid import uuid4
 
 from bas.db.database import db
+import bas.db.model.game_state as game_state
 import bas.manager as manager
 from bas.nlp.message_handler import MessageHandler
 
@@ -16,9 +17,6 @@ class GameMaster(Thread):
         self.queue = Queue()
         self.message_handler = MessageHandler(self)
         self.game = None
-        self.game_ready = False
-        self.awaiting_more_characters = False
-        self.awaiting_start_confirmation = False
         print('[+] Started Game Master #{}'.format(self.__id))
 
     @property
@@ -49,20 +47,13 @@ class GameMaster(Thread):
         message = self.queue.get()
         print('\n{}\n'.format(message))
 
-        if self.awaiting_more_characters:
+        if self.game is not None and (
+            self.game.state == game_state.awaiting_characters()
+        ):
             response_message = self.add_people_to_game(message)
-        elif self.awaiting_start_confirmation:
-            response_message = self.start_game_if_ready(message)
         else:
             response_message = self.message_handler.process(message)
 
-        if self.awaiting_more_characters:
-            response_message += '\n- Who else wants to join the game?'
-            response_message += '\n(tag user / nobody)\n'
-        elif self.awaiting_start_confirmation:
-            response_message += '\n- Say "yes" when ready to begin.\n'
-        else:
-            response_message += '\n'
         print(response_message)
 
     def add_people_to_game(self, message):
@@ -89,15 +80,5 @@ class GameMaster(Thread):
                     user.username
                 )
 
-        self.awaiting_more_characters = False
-        self.awaiting_start_confirmation = True
+        self.game.state = game_state.awaiting_start_confirmation()
         return response
-
-    def start_game_if_ready(self, message):
-        if message.message == 'yes':
-            if self.game.players_have_characters_set():
-                self.awaiting_start_confirmation = False
-                return '[+] GAME HAS STARTED'
-            else:
-                return '[-] Every user must have a character created!'
-        return '- How can I help you?'
