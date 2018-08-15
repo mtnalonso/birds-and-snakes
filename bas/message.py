@@ -9,6 +9,8 @@ class Message:
         self.__message = message
         self.__username = username
         self.__user = manager.get_user_or_create_if_new(self.username)
+        self.tagged_usernames = []
+        self.__load_tagged_usernames()
 
     @property
     def message(self):
@@ -30,10 +32,17 @@ class Message:
         username, message = message.split(':', 1)
         return cls(message.lstrip(), username)
 
+    def __load_tagged_usernames(self):
+        message_words = self.message.split(' ')
+        for word in message_words:
+            if word[0] == '@':
+                self.tagged_usernames.append(word[1:])
+        return
+
     def get_preprocessed_message(self):
         preprocessed_message = self.message
         if '@' in preprocessed_message:
-            preprocessed_message = self.__replace_usernames(self.message)
+            preprocessed_message = self.__replace_usernames()
         return preprocessed_message
 
     def __replace_usernames(self):

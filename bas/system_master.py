@@ -39,3 +39,6 @@ class SystemMaster(Thread):
             self.game_masters_by_user[user.id] = game_master
         game_master = self.game_masters_by_user[user.id]
         game_master.new_message(message)
+
+    def add_user(self, game_master, user):
+        self.game_masters_by_user[user.id] = game_master

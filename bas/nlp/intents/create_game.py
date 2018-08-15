@@ -28,7 +28,7 @@ class CreateGame(Intent):
         self.game = game
 
         response = '[+] Created new game\n{}\n'.format(game)
-        response += '- Who else wants to join the game?'
+        response += '\n- Who else wants to join the game?\n'
         response += '(tag user / nobody)'
         return response
 
@@ -40,4 +40,6 @@ class CreateGame(Intent):
         return '[-] Every user must have a character created!'
 
     def start_game(self):
-        return '[+] GAME HAS STARTED'
+        if self.game.state != game_state.started():
+            return '[+] STARTING THE ADVENTURE'
+        return '[-] The adventure has already started long ago...'

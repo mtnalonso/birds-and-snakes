@@ -3,23 +3,27 @@ from bas.db.model.character import Character
 from bas.db.model.character_class import CharacterClass
 from bas.db.model.race import Race
 from bas.nlp.intents.intent import Intent
+import bas.db.model.game_state as game_state
 
 
 class CreateCharacter(Intent):
     def __init__(self, game_master):
         super().__init__('create-character', game_master)
+        self.game = self.game_master.game
 
     def execute(self, message, nlp_data):
         user = message.user
 
         if self.is_action_complete(nlp_data):
             character = self.create_character(user, nlp_data)
-            return '[+] Created character "{}" ({})'.format(
+            response = '[+] Created character "{}" ({})\n'.format(
                     character.name,
                     character.character_class
             )
+            response += self.check_other_players_if_in_game()
         else:
-            return self.get_fulfillment(nlp_data)
+            response = self.get_fulfillment(nlp_data)
+        return response
 
     def create_character(self, user, nlp_data):
         parameters = self.get_parameters(nlp_data)
@@ -53,3 +57,13 @@ class CreateCharacter(Intent):
         character_class_name = parameters['character-class']
         character_class = db.find(CharacterClass, name=character_class_name)
         return character_class
+
+    def check_other_players_if_in_game(self):
+        if self.game is not None:
+            if self.game.players_have_characters_set():
+                response = 'Every player seems set\n'
+                response += 'Let me know when you are ready to begin!\n'
+                self.game.state = game_state.awaiting_start_confirmation()
+                db.session.commit()
+                return response
+        return ''

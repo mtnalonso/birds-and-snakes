@@ -33,6 +33,8 @@ class MessageHandler:
 
         if intent_tag == 'create-game':
             intent = CreateGame
+        if intent_tag == 'add-game-people':
+            intent = AddGamePeople
         if intent_tag == 'list-user-games':
             intent = ListGames
         if intent_tag == 'create-character':
