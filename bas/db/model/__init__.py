@@ -6,6 +6,7 @@ from bas.db.model.character import Character
 from bas.db.model.character_class import CharacterClass
 from bas.db.model.game import Game
 from bas.db.model.game_level import GameLevel
+from bas.db.model.game_level_character import GameLevelCharacter
 from bas.db.model.game_state import GameState
 from bas.db.model.gender import Gender
 from bas.db.model.game_users import GameUsers
