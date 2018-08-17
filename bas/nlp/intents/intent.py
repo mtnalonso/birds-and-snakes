@@ -5,6 +5,7 @@ class Intent(ABC):
     def __init__(self, intent, game_master):
         self.__intent = intent
         self.game_master = game_master
+        self.game = self.game_master.game
 
     @property
     def intent(self):

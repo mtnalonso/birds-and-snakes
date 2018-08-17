@@ -9,7 +9,6 @@ import bas.db.model.game_state as game_state
 class CreateCharacter(Intent):
     def __init__(self, game_master):
         super().__init__('create-character', game_master)
-        self.game = self.game_master.game
 
     def execute(self, message, nlp_data):
         user = message.user

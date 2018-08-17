@@ -7,7 +7,6 @@ import bas.manager as manager
 class AddGamePeople(Intent):
     def __init__(self, game_master):
         super().__init__('add-game-people', game_master)
-        self.game = game_master.game
 
     def execute(self, message, nlp_data):
         if self.game is None:

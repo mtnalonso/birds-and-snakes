@@ -7,7 +7,6 @@ import bas.db.model.game_state as game_state
 class CreateGame(Intent):
     def __init__(self, game_master):
         super().__init__('create-game', game_master)
-        self.game = game_master.game
 
     def execute(self, message, nlp_data):
         if self.game is None:
