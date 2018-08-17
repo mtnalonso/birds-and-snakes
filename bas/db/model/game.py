@@ -20,6 +20,8 @@ class Game(Base):
 
     state = relationship('GameState', foreign_keys=state_id)
     users = relationship('User', secondary='game_users')
+    levels = relationship('GameLevel',
+                          primaryjoin='Game.id==GameLevel.game_id')
 
     def __init__(self, active=True):
         self.creation_datetime = datetime.now()
@@ -30,6 +32,9 @@ class Game(Base):
         return '<Game(id={}, key={}, active={}, state={})>'.format(
             self.id, self.key, self.active, self.state
         )
+
+    def __str__(self):
+        return self.key
 
     def players_have_characters_set(self):
         for user in self.users:
