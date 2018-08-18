@@ -1,5 +1,6 @@
 from bas.db.database import db
 from bas.db.model.character_class import CharacterClass
+from bas.db.model.condition import Condition
 from bas.db.model.game_state import GameState
 from bas.db.model.game_state import GameState
 from bas.db.model.magic_school import MagicSchool
@@ -48,6 +49,29 @@ def populate_character_classes():
     print('[+] All character classes added to the database.')
 
 
+def populate_conditions():
+    condition_names_en = [
+        'Blinded', 'Charmed', 'Deafened', 'Frightened', 'Grappled',
+        'Incapacitated', 'Invisible', 'Paralyzed', 'Petrified', 'Poisoned',
+        'Prone', 'Restrained', 'Stunned', 'Unconscious', 'Exhaustation'
+    ]
+
+    condition_names_es = [
+        'Cegado', 'Hechizado', 'Ensordecido', 'Asustado', 'Agarrado',
+        'Incapacitado', 'Invisible', 'Paralizado', 'Petrificado',
+        'Envenenado', 'Tumbado', 'Apresado', 'Aturdido', 'Inconsciente',
+        'Agotamiento'
+    ]
+
+    condition_names = {'en': condition_names_en, 'es': condition_names_es}
+
+    for condition_name in condition_names[config.language]:
+        condition = Condition(condition_name)
+        db.session.add(condition)
+    db.session.commit()
+    print('[+] All condition classes added to the database.')
+
+
 def populate_schools_of_magic():
     school_names_en = [
         'Abjuration', 'Conjuration', 'Divination', 'Enchantment',
@@ -85,5 +109,6 @@ def populate_game_states():
 def populate_all():
     populate_races()
     populate_character_classes()
+    populate_conditions()
     populate_schools_of_magic()
     populate_game_states()
