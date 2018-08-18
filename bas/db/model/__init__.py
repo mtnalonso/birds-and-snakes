@@ -15,5 +15,5 @@ from bas.db.model.magic_school import MagicSchool
 from bas.db.model.pronoun import Pronoun
 from bas.db.model.race import Race
 from bas.db.model.spell import Spell
-from bas.db.model.status import Status
+from bas.db.model.condition import Condition
 from bas.db.model.user import User
