@@ -3,8 +3,10 @@ from bas.db.model.character_class import CharacterClass
 from bas.db.model.condition import Condition
 from bas.db.model.game_state import GameState
 from bas.db.model.game_state import GameState
+from bas.db.model.level import Level
 from bas.db.model.magic_school import MagicSchool
 from bas.db.model.race import Race
+from bas.db.model.story import Story
 import bas.db.model.game_state as game_state
 import bas.config as config
 
@@ -106,9 +108,20 @@ def populate_game_states():
     print('[+] All game states added to the database')
 
 
+def populate_test_story():
+    story = Story('Test Story', '\nblah\nblah\nblah\nmistery introduction\n\n')
+    level = Level('Test Level')
+    story.start_level = level
+    db.session.add(story)
+    db.session.add(level)
+    db.session.commit()
+    print('[+] Test level added to the database')
+
+
 def populate_all():
     populate_races()
     populate_character_classes()
     populate_conditions()
     populate_schools_of_magic()
     populate_game_states()
+    populate_test_story()
