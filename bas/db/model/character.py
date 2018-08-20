@@ -12,7 +12,8 @@ class Character(Base):
     level = Column(Integer)
     experience = Column(BigInteger)
 
-    health_points = Column(Integer)
+    max_hit_points = Column(Integer)
+    hit_points = Column(Integer)
     speed = Column(Integer)
     strength = Column(Integer)
     dexterity = Column(Integer)
