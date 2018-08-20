@@ -17,9 +17,11 @@ class Game(Base):
     last_message_datetime = Column(DateTime)
     
     state_id = Column(Integer, ForeignKey('game_states.id'))
+    story_id = Column(Integer, ForeignKey('stories.id'))
 
     state = relationship('GameState', foreign_keys=state_id)
     users = relationship('User', secondary='game_users')
+    story = relationship('Story', foreign_keys=story_id)
     levels = relationship('GameLevel',
                           primaryjoin='Game.id==GameLevel.game_id')
 
