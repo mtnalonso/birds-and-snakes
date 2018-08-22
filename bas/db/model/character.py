@@ -21,9 +21,14 @@ class Character(Base):
     wisdom = Column(Integer)
     charisma = Column(Integer)
 
+    position_x = Column(Integer)
+    position_y = Column(Integer)
+    position_z = Column(Integer)
+
     gender_id = Column(Integer, ForeignKey('genders.id'))
     pronoun_id = Column(Integer, ForeignKey('pronouns.id'))
     user_id = Column(Integer, ForeignKey('users.id'))
+    game_level_id = Column(Integer, ForeignKey('game_levels.id'))
     race_id = Column(Integer, ForeignKey('races.id'))
     character_class_id = Column(Integer, ForeignKey('character_classes.id'))
     condition_id = Column(Integer, ForeignKey('conditions.id'))
@@ -32,6 +37,8 @@ class Character(Base):
     pronoun = relationship('Pronoun')
     user = relationship('User', foreign_keys=user_id,
                         back_populates='characters')
+    game_level = relationship('GameLevel', foreign_keys=game_level_id,
+                              back_populates='characters')
     race = relationship('Race')
     character_class = relationship('CharacterClass')
     condition = relationship('Condition')
