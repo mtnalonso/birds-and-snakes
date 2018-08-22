@@ -14,7 +14,6 @@ class GameLevel(Base):
 
     level = relationship('Level', foreign_keys=level_id)
     game = relationship('Game', foreign_keys=game_id)
-    user_characters = relationship('GameLevelCharacter')
 
     def __init__(self, active=False, level=None, game=None):
         self.active = active
