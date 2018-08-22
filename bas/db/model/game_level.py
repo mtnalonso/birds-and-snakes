@@ -30,10 +30,20 @@ class GameLevel(Base):
             self.id, self.level, self.game
         )
 
+    def load_game_characters(self):
+        for user in self.game.users:
+            self.add_character(user.default_character)
+        return
+
     def add_character(self, character, position=None):
+        pos_x = pos_y = -1
+        pos_z = 0
+
         if position is not None:
             pos_x, pos_y, pos_z = position
-            character.position_x = pos_x
-            character.position_y = pos_y
-            character.position_z = pos_z
-        user_characters.append(character)
+
+        character.position_x = pos_x
+        character.position_y = pos_y
+        character.position_z = pos_z
+
+        self.characters.append(character)

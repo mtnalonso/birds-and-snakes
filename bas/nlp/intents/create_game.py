@@ -47,6 +47,7 @@ class CreateGame(Intent):
             game_level = GameLevel(active=True)
             game_level.level = self.game.story.start_level
             game_level.game = self.game
+            game_level.load_game_characters()
             db.session.add(game_level)
             db.session.commit()
 
