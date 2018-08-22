@@ -1,10 +1,11 @@
 import bas.config as config
+from bas.resources.locale import locale
 from bas.system_master import SystemMaster
 from bas.dev.server import DevServer, server_input_queue
 
 
 def run_game():
-    print('Birds & Snakes\n')
+    print(locale('game_title') + '\n')
 
     if config.is_dev_mode():
         server = DevServer()
