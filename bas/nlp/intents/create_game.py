@@ -1,5 +1,6 @@
 from bas.db.database import db
 from bas.db.model.game import Game
+from bas.db.model.game_level import GameLevel
 from bas.db.model.story import Story
 from bas.nlp.intents.intent import Intent
 import bas.db.model.game_state as game_state
@@ -43,7 +44,10 @@ class CreateGame(Intent):
     def start_game(self):
         if self.game.state != game_state.started():
             self.game.state = game_state.started()
-            # TODO: add level to game
+            game_level = GameLevel(active=True)
+            game_level.level = self.game.story.start_level
+            game_level.game = self.game
+            db.session.add(game_level)
             db.session.commit()
 
             response = '[+] STARTING THE ADVENTURE\n'
