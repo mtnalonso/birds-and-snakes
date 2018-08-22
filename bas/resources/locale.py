@@ -1,6 +1,6 @@
 import bas.config as config
-import bas.resources.locale.languages.en as en
-import bas.resources.locale.languages.es as es
+import bas.resources.languages.en as en
+import bas.resources.languages.es as es
 
 
 def get_locale_data():
