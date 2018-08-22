@@ -17,13 +17,13 @@ class MessageHandler:
 
     def __process_intent_and_get_response(self, message, nlp_data):
         # TODO: alter this checking DEV mode
-        #try:
-        #    intent = self.__get_intent(nlp_data)
-        #    response = intent.execute(message, nlp_data)
-        #except Exception as e:
-        #    response = str(e)
-        #finally:
-        #    return response
+        # try:
+        #     intent = self.__get_intent(nlp_data)
+        #     response = intent.execute(message, nlp_data)
+        # except Exception as e:
+        #     response = str(e)
+        # finally:
+        #     return response
         intent = self.__get_intent(nlp_data)
         return intent.execute(message, nlp_data)
 

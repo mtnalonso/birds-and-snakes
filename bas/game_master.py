@@ -44,7 +44,7 @@ class GameMaster(Thread):
         message = self.queue.get()
         print('\n{}\n'.format(message))
         response_message = self.message_handler.process(message)
-        print(response_message + '\n') 
+        print(response_message + '\n')
 
     def add_user(self, user):
         self.system_master.add_user(self, user)

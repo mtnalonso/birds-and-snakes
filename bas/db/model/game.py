@@ -15,7 +15,7 @@ class Game(Base):
     creation_datetime = Column(DateTime)
     active = Column(Boolean(name='active_bool'))
     last_message_datetime = Column(DateTime)
-    
+
     state_id = Column(Integer, ForeignKey('game_states.id'))
     story_id = Column(Integer, ForeignKey('stories.id'))
 

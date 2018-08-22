@@ -32,5 +32,6 @@ def awaiting_characters():
 def awaiting_start_confirmation():
     return db.find(GameState, name=AWAITING_START_CONFIRMATION)
 
+
 def started():
     return db.find(GameState, name=STARTED)
