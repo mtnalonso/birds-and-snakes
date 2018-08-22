@@ -12,13 +12,18 @@ import bas.config as config
 
 
 def populate_races():
-    race_names = [
-        'dwarf', 'elf', 'hafling', 'human', 'dragonborn', 'gnome', 'half-elf',
-        'half-orc', 'tiefling'
-    ]
+    races = []
+    races.append(Race('dragonborn', 30))
+    races.append(Race('dwarf', 25))
+    races.append(Race('elf', 30))
+    races.append(Race('gnome', 25))
+    races.append(Race('half-elf', 30))
+    races.append(Race('half-orc', 30))
+    races.append(Race('hafling', 30))
+    races.append(Race('human', 30))
+    races.append(Race('tiefling', 30))
 
-    for race_name in race_names:
-        race = Race(race_name)
+    for race in races:
         db.session.add(race)
     db.session.commit()
     print('[+] All races added to the database.')
