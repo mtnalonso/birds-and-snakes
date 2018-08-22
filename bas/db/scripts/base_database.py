@@ -12,19 +12,12 @@ import bas.config as config
 
 
 def populate_races():
-    race_names_en = [
-        'Dwarf', 'Elf', 'Hafling', 'Human', 'Dragonborn', 'Gnome', 'Half-Elf',
-        'Half-Orc', 'Tiefling'
+    race_names = [
+        'dwarf', 'elf', 'hafling', 'human', 'dragonborn', 'gnome', 'half-elf',
+        'half-orc', 'tiefling'
     ]
 
-    race_names_es = [
-        'Enano', 'Elfo', 'Mediano', 'Humano', 'Dracónico', 'Gnomo',
-        'Semielfo', 'Semiorco', 'Tiefling'
-    ]
-
-    race_names = {'en': race_names_en, 'es': race_names_es}
-
-    for race_name in race_names[config.language]:
+    for race_name in race_names:
         race = Race(race_name)
         db.session.add(race)
     db.session.commit()
@@ -32,19 +25,12 @@ def populate_races():
 
 
 def populate_character_classes():
-    class_names_en = [
-        'Barbarian', 'Bard', 'Cleric', 'Druid', 'Fighter', 'Monk', 'Paladin',
-        'Ranger', 'Rogue', 'Sorcerer', 'Warlock', 'Wizard'
+    class_names = [
+        'barbarian', 'bard', 'cleric', 'druid', 'fighter', 'monk', 'paladin',
+        'ranger', 'rogue', 'sorcerer', 'warlock', 'wizard'
     ]
 
-    class_names_es = [
-        'Bárbaro', 'Bardo', 'Clérigo', 'Druida', 'Guerrero', 'Monje',
-        'Paladín', 'Explorador', 'Hechicero', 'Brujo', 'Mago'
-    ]
-
-    class_names = {'en': class_names_en, 'es': class_names_es}
-
-    for class_name in class_names[config.language]:
+    for class_name in class_names:
         character_class = CharacterClass(class_name)
         db.session.add(character_class)
     db.session.commit()
@@ -52,22 +38,13 @@ def populate_character_classes():
 
 
 def populate_conditions():
-    condition_names_en = [
-        'Blinded', 'Charmed', 'Deafened', 'Frightened', 'Grappled',
-        'Incapacitated', 'Invisible', 'Paralyzed', 'Petrified', 'Poisoned',
-        'Prone', 'Restrained', 'Stunned', 'Unconscious', 'Exhaustation'
+    condition_names = [
+        'blinded', 'charmed', 'deafened', 'frightened', 'grappled',
+        'incapacitated', 'invisible', 'paralyzed', 'petrified', 'poisoned',
+        'prone', 'restrained', 'stunned', 'unconscious', 'exhaustation'
     ]
 
-    condition_names_es = [
-        'Cegado', 'Hechizado', 'Ensordecido', 'Asustado', 'Agarrado',
-        'Incapacitado', 'Invisible', 'Paralizado', 'Petrificado',
-        'Envenenado', 'Tumbado', 'Apresado', 'Aturdido', 'Inconsciente',
-        'Agotamiento'
-    ]
-
-    condition_names = {'en': condition_names_en, 'es': condition_names_es}
-
-    for condition_name in condition_names[config.language]:
+    for condition_name in condition_names:
         condition = Condition(condition_name)
         db.session.add(condition)
     db.session.commit()
@@ -75,19 +52,12 @@ def populate_conditions():
 
 
 def populate_schools_of_magic():
-    school_names_en = [
-        'Abjuration', 'Conjuration', 'Divination', 'Enchantment',
-        'Evocation', 'Illusion', 'Necromancy', 'Transmutation'
+    school_names = [
+        'abjuration', 'conjuration', 'divination', 'enchantment',
+        'evocation', 'illusion', 'necromancy', 'transmutation'
     ]
 
-    school_names_es = [
-        'Abjuración', 'Conjuración', 'Adivinación', 'Encantamiento',
-        'Evocación', 'Ilusión', 'Nigromancia', 'Transmutación'
-    ]
-
-    school_names = {'en': school_names_en, 'es': school_names_es}
-
-    for school_name in school_names[config.language]:
+    for school_name in school_names:
         school = MagicSchool(school_name)
         db.session.add(school)
     db.session.commit()
