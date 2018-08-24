@@ -3,6 +3,7 @@ from bas.db.model.character_class import CharacterClass
 from bas.db.model.condition import Condition
 from bas.db.model.game_state import GameState
 from bas.db.model.game_state import GameState
+from bas.db.model.language import Language
 from bas.db.model.level import Level
 from bas.db.model.magic_school import MagicSchool
 from bas.db.model.race import Race
@@ -27,6 +28,23 @@ def populate_races():
         db.session.add(race)
     db.session.commit()
     print('[+] All races added to the database.')
+
+
+def populate_languages():
+    languages = []
+    languages.append(Language('common'))
+    languages.append(Language('draconic'))
+    languages.append(Language('dwarvish'))
+    languages.append(Language('elvish'))
+    languages.append(Language('gnomish'))
+    languages.append(Language('orc'))
+    languages.append(Language('hafling'))
+    languages.append(Language('infernal'))
+
+    for language in languages:
+        db.session.add(language)
+    db.session.commit()
+    print('[+] All languages added to the database.')
 
 
 def populate_character_classes():
@@ -95,6 +113,7 @@ def populate_test_story():
 
 def populate_all():
     populate_races()
+    populate_languages()
     populate_character_classes()
     populate_conditions()
     populate_schools_of_magic()
