@@ -15,6 +15,7 @@ from bas.db.model.level import Level
 from bas.db.model.magic_school import MagicSchool
 from bas.db.model.pronoun import Pronoun
 from bas.db.model.race import Race
+from bas.db.model.race_language import RaceLanguage
 from bas.db.model.spell import Spell
 from bas.db.model.story import Story
 from bas.db.model.user import User
