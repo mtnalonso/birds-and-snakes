@@ -1,4 +1,5 @@
 from bas.db.database import db
+from bas.db.model.alignment import Alignment
 from bas.db.model.character_class import CharacterClass
 from bas.db.model.condition import Condition
 from bas.db.model.game_state import GameState
@@ -10,6 +11,24 @@ from bas.db.model.race import Race
 from bas.db.model.story import Story
 import bas.db.model.game_state as game_state
 import bas.config as config
+
+
+def populate_alignments():
+    alignments = []
+    alignments.append(Alignment('lawful_good'))
+    alignments.append(Alignment('neutral_good'))
+    alignments.append(Alignment('chaotic_good'))
+    alignments.append(Alignment('lawful_neutral'))
+    alignments.append(Alignment('neutral'))
+    alignments.append(Alignment('chaotic_neutral'))
+    alignments.append(Alignment('lawful_evil'))
+    alignments.append(Alignment('neutral_evil'))
+    alignments.append(Alignment('chaotic_evil'))
+
+    for alignment in alignments:
+        db.session.add(alignment)
+    db.session.commit()
+    print('[+] All alignments added to the database.')
 
 
 def populate_languages():
@@ -147,6 +166,7 @@ def populate_test_story():
 
 
 def populate_all():
+    populate_alignments()
     populate_languages()
     populate_races()
     populate_character_classes()

@@ -2,6 +2,7 @@
 """
 Preload entity classes in order to populate the database metadata
 """
+from bas.db.model.alignment import Alignment
 from bas.db.model.character import Character
 from bas.db.model.character_class import CharacterClass
 from bas.db.model.condition import Condition
