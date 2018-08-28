@@ -2,6 +2,17 @@
 locale = {
     'game_title': 'Birds & Snakes (ES)',
 
+    # Alignment
+    'lawful_good': 'Legal bueno',
+    'neutral_good': 'Neutral bueno',
+    'chaotic_good': 'Caótico bueno',
+    'lawful_neutral': 'Legal neutral',
+    'neutral': 'Neutral',
+    'chaotic_neutral': 'Caótico neutral',
+    'lawful_evil': 'Legal malvado',
+    'neutral_evil': 'Neutral malvado',
+    'chaotic_evil': 'Caótico malvado',
+
     # Character classes
     'barbarian': 'Bárbaro',
     'bard': 'Bardo',
