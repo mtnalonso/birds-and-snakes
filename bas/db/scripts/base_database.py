@@ -12,24 +12,6 @@ import bas.db.model.game_state as game_state
 import bas.config as config
 
 
-def populate_races():
-    races = []
-    races.append(Race('dragonborn', 30))
-    races.append(Race('dwarf', 25))
-    races.append(Race('elf', 30))
-    races.append(Race('gnome', 25))
-    races.append(Race('half-elf', 30))
-    races.append(Race('half-orc', 30))
-    races.append(Race('hafling', 30))
-    races.append(Race('human', 30))
-    races.append(Race('tiefling', 30))
-
-    for race in races:
-        db.session.add(race)
-    db.session.commit()
-    print('[+] All races added to the database.')
-
-
 def populate_languages():
     languages = []
     languages.append(Language('common'))
@@ -45,6 +27,59 @@ def populate_languages():
         db.session.add(language)
     db.session.commit()
     print('[+] All languages added to the database.')
+
+
+def populate_races():
+    races = []
+
+    dragonborn = Race('dragonborn', 30)
+    dragonborn.languages.append(db.find(Language, name='common'))
+    dragonborn.languages.append(db.find(Language, name='draconic'))
+    races.append(dragonborn)
+
+    dwarf = Race('dwarf', 25)
+    dwarf.languages.append(db.find(Language, name='common'))
+    dwarf.languages.append(db.find(Language, name='dwarvish'))
+    races.append(dwarf)
+
+    elf = Race('elf', 30)
+    elf.languages.append(db.find(Language, name='common'))
+    elf.languages.append(db.find(Language, name='elvish'))
+    races.append(elf)
+
+    gnome = Race('gnome', 25)
+    gnome.languages.append(db.find(Language, name='common'))
+    gnome.languages.append(db.find(Language, name='gnomish'))
+    races.append(gnome)
+
+    half_elf = Race('half-elf', 30)
+    half_elf.languages.append(db.find(Language, name='common'))
+    half_elf.languages.append(db.find(Language, name='elvish'))
+    races.append(half_elf)
+
+    half_orc = Race('half-orc', 30)
+    half_orc.languages.append(db.find(Language, name='common'))
+    half_orc.languages.append(db.find(Language, name='orc'))
+    races.append(half_orc)
+
+    hafling = Race('hafling', 30)
+    hafling.languages.append(db.find(Language, name='common'))
+    hafling.languages.append(db.find(Language, name='hafling'))
+    races.append(hafling)
+
+    human = Race('human', 30)
+    human.languages.append(db.find(Language, name='common'))
+    races.append(human)
+
+    tiefling = Race('tiefling', 30)
+    tiefling.languages.append(db.find(Language, name='common'))
+    tiefling.languages.append(db.find(Language, name='infernal'))
+    races.append(tiefling)
+
+    for race in races:
+        db.session.add(race)
+    db.session.commit()
+    print('[+] All races added to the database.')
 
 
 def populate_character_classes():
@@ -112,8 +147,8 @@ def populate_test_story():
 
 
 def populate_all():
-    populate_races()
     populate_languages()
+    populate_races()
     populate_character_classes()
     populate_conditions()
     populate_schools_of_magic()
