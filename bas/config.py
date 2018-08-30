@@ -1,3 +1,4 @@
+import os
 from configparser import ConfigParser
 
 
@@ -8,6 +9,8 @@ ENVIRONMENT_DEVELOP = 'develop'
 
 config = ConfigParser()
 config.read(CONFIG_FILE)
+
+maps_path = os.path.dirname(os.path.abspath(__file__)) + '/resources/maps/'
 
 environment = config['DEFAULT']['environment']
 language = config['DEFAULT']['language']

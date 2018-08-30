@@ -157,7 +157,7 @@ def populate_game_states():
 
 def populate_test_story():
     story = Story('Test Story', '\nblah\nblah\nblah\nmistery introduction\n\n')
-    level = Level('Test Level')
+    level = Level('Test Level', map_filename='test.tmx')
     story.start_level = level
     db.session.add(story)
     db.session.add(level)
