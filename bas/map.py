@@ -43,6 +43,7 @@ class Map:
         tileset_tile = self.__get_tileset_tile(tile.gid)
         if tileset_tile is not None:
             tile_info['properties'] = self.__get_tile_properties(tileset_tile)
+            tile_info['type'] = tileset_tile.type
         return tile_info
 
     def __get_tileset_tile(self, tile_gid):
