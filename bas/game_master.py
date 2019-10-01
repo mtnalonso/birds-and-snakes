@@ -1,10 +1,12 @@
 from datetime import datetime
 from threading import Thread
+import logging
 from queue import Queue
 from uuid import uuid4
 
 from bas.nlp.message_handler import MessageHandler
 
+logger = logging.getLogger(__name__)
 
 class GameMaster(Thread):
     def __init__(self, system_master):
@@ -14,7 +16,7 @@ class GameMaster(Thread):
         self.queue = Queue()
         self.message_handler = MessageHandler(self)
         self.game = None
-        print('[+] Started Game Master #{}'.format(self.__id))
+        logger.info('Started Game Master #{}' .format(self.__id))
 
     @property
     def id(self):
