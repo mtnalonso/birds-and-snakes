@@ -13,11 +13,18 @@ class Map:
     def map(self):
         return self.__map
 
-    def load(self):
+    def load(self, characters=None):
         tmx_map = tmx.TileMap.load(self.file_path)
         self.height = tmx_map.height
         self.width = tmx_map.width
         self.__load_map_info(tmx_map)
+        self.__load_characters_on_map(characters)
+
+    def get(self, x, y):
+        return self.__map[x][y]
+
+    def put(self, entity, x, y):
+        self.__map[x][y]['entity'] = entity
 
     def __load_map_info(self, tmx_map):
         if tmx_map.renderorder != 'right-down':
@@ -58,4 +65,3 @@ class Map:
         for _property in tile.properties:
             tile_properties[_property.name] = _property.value
         return tile_properties
-
