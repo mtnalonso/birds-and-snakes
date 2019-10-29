@@ -8,5 +8,5 @@ config.ini
 doc/
 nlp_models/
 reset_db.sh
-
+.idea*
 .DS_Store
