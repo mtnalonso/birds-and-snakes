@@ -21,12 +21,18 @@ class Manager:
         if command == 'help'
             print_usage()
             return
-        print('[-] Wrong command!')
+        print('[-] Wrong command!\n')
+        print_usage()
+
 
     def create_database(self):
         db.create_all()
         populate_all()
 
+def print_usage()
+    print('Manager commands:')
+    print('\tcreate_database\tInitializes an empty database')
+    print('\tpopulate_database\tPopulates the system database with default data')
 
 def get_user_or_create_if_new(username):
     user = db.find(User, username=username)
