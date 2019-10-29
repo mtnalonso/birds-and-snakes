@@ -18,8 +18,12 @@ class Manager:
         if command == 'populate_database':
             populate_all()
             return
+        if command == 'help'
+            print_usage()
+            return
         print('[-] Wrong command!\n')
         print_usage()
+
 
     def create_database(self):
         db.create_all()
